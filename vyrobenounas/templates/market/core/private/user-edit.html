@@ -1,0 +1,53 @@
+{% extends "core/private/home.html" %}
+{% load i18n fields %}
+
+{% block head-title%}Úprava uživatelského profilu{%endblock%}
+
+{% block media %}{{ user_form.media }}{% endblock %}
+
+{% block bottom-javascript %}
+    {{block.super}}
+    <script type="text/javascript" src="{{STATIC_URL}}js/core.admin.user-edit.js"></script>
+{% endblock bottom-javascript %}
+
+
+{% block content %}
+<div class="content-unit">
+    <form method="post" enctype="multipart/form-data" class="form-horizontal">
+    <h1>Úprava uživatelského profilu</h1>
+    <h2>Ostatní akce</h2>
+    <ul>
+      <li><a href="{% url 'account_email' %}" class="btn btn-link">správa emailů</a></li>
+      <li><a href="{% url 'account_set_password' %}" class="btn btn-link">nastavení hesla</a></li>
+    </ul>
+    <p>
+      {% csrf_token %}
+
+      {% hfield user_form.name %}
+      {# {% hfield user_form.avatar %} #}
+
+      <br>
+
+      {{ addresses.non_field_errors }}
+      {{ addresses.shipping.non_field_errors }}
+      {{ addresses.billing.non_field_errors }}
+
+
+      <div class="row">
+          <div class="col-md-6 col-xs-12" id="billing-address">
+              <h4>Fakturační adresa<span style="font-size:80%">&nbsp;&nbsp;({{address_form.addresses_the_same}}{{address_form.addresses_the_same.label}})</span></h4>
+              {% include "core/include/address_form.html" with form=address_form.billing %}
+          </div>
+          <div class="col-md-6 col-xs-12" id="shipping-address">
+              <div >
+              <h4>Dodací adresa</h4>
+              {% include "core/include/address_form.html" with form=address_form.shipping %}
+              </div>
+          </div>
+      </div>
+
+      <input type="submit" value="Uložit" class="btn btn-success btn-submit"/>
+    </p>
+    </form>
+</div>
+{% endblock %}

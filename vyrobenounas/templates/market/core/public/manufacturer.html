@@ -1,0 +1,45 @@
+{% extends "core/public/products.html" %}
+
+
+{% block header-block %}{% endblock %}
+
+{% block head-title %}{{block.super}} - {{manufacturer.name}}{% endblock head-title %}
+
+{% block header %}
+    <h1>Výrobky {% if manufacturer %}od <em>{{manufacturer.name}}</em>{% endif %}</h1>
+{% endblock %}
+
+
+{% block content %}
+    {% if object_list %}
+        <div class="content-unit expanded">
+            <h2>Umístění prodejců</h2>
+            {% include "core/include/show-map.html" %}
+        </div>
+
+        {% include "core/include/box-list.html" with box="core/include/product-box-small.html" %}
+
+    {% else %}
+
+        <div class="col-sm-12 col-xs-12 content-unit shadowed-light">
+            <h2>Tento český výrobce zde nemá žádné výrobky!</h2>
+            {% if not request.user.is_authenticated %}
+                Dommluvte se s výrobcem, <a href="{% url 'account_signup' %}" class="link">zaregistrujte se</a> a založte si obchod! Dokud nezačnete prodávat ve větším, tak nic neplatíte.
+            {% else %}
+                {% if not has_shop %}
+                Zaregistrujte se a <a href="{% url 'admin-shop' %}" class="link">založte si obchod</a>!Dokud nezačnete prodávat ve větším, tak nic neplatíte.
+                {% else %}
+                Právě vy sem můžete přidat zboží z Vašeho obchodu.
+                {% endif %}
+            {% endif %}
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block bottom-javascript %}
+    {{ block.super }}
+    <script type="text/javascript" src="https://api4.mapy.cz/loader.js"></script>
+    <script type="text/javascript">Loader.load();</script>
+{% endblock bottom-javascript %}

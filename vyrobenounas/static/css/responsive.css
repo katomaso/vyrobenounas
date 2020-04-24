@@ -1,0 +1,86 @@
+/** responsive **/
+/*@media (min-width:320px)  { /* smartphones, portrait iPhone, portrait 480x320 phones (Android) }*/
+/*@media (min-width:480px)  { /* smartphones, Android phones, landscape iPhone  } */
+/*@media (min-width:600px)  { /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android)  }*/
+/*@media (min-width:801px)  { /* tablet, landscape iPad, lo-res laptops ands desktops  }*/
+/*@media (min-width:1025px) { /* big landscape tablets, laptops, and desktops }*/ 
+/*@media (min-width:1281px) { /* hi-res laptops and desktops  }*/
+
+@media (max-width: 1650px) {
+	.grid-sizer, .grid-item {
+		width: 20%;
+	}
+	.grid-item--width2 {
+		width: 40%;
+	}
+}
+
+@media (max-width: 1200px) {
+	.grid-sizer, .grid-item {
+		width: 25%;
+	}
+	.grid-item--width2 {
+		width: 50%;
+	}
+	#topMenu .sectionWrap {
+		width: 100%;
+	}
+}
+
+@media (max-width: 1000px) {
+	#gridWrap {
+		background-color: #fbfbfb;
+		padding: 1.5em 0.5em;
+	}	
+	.grid-sizer, .grid-item {
+		width: 33.334%;
+	}
+	.grid-item--width2 {
+		width: 66.667%;
+	}
+}
+
+@media (max-width: 950px) {
+	.sectionIcon {
+		display: block;
+		width: 1.91em;
+		height: 1.2em;
+		margin: 0 auto 0.2em auto;
+		padding-top: 0.7em;
+	}
+	.sectionText {
+		display: block;
+	}
+}
+
+@media (max-width: 780px) {
+	.grid-sizer, .grid-item {
+		width: 50%;
+	}
+	.grid-item--width2 {
+		width: 100%;
+	}
+}
+
+@media (max-width: 560px)  {
+	.grid-sizer, .grid-item {
+		width: 100%;
+	}
+	.grid-item--width2 {
+		width: 100%;
+	}
+	#filterWrap {
+		background-color: #e6e6e6;
+	}
+	#filter {
+		display: table;
+		margin: 0 auto;
+		width: auto;
+	}	
+	.filterCol {
+		display: block;
+		text-align: left;
+		width: 100%;
+		padding: 0.2em;
+	}	
+}

@@ -1,0 +1,117 @@
+{% extends "core/private/home.html" %}
+{% load core_tags fields %}
+
+{% block head-title%}{%if product%}Úprava {{product.name}}{%else%}Přidání produktu{%endif%}{%endblock%}
+
+{% block media %}
+{{ block.super }}
+{% if form %}
+    {{ form.media }}
+{% endif %}
+{{ offer_form.media }}
+{% include "autocomplete_light/static.html" %}
+{% endblock %}
+
+{% block bottom-javascript %}
+    {{block.super}}
+    {% if not product %}
+        <script type="text/javascript" src="{{STATIC_URL}}js/core.admin.product.js"></script>
+    {% endif %}
+{% endblock bottom-javascript %}
+
+{% block content %}
+<div class="content-unit">
+
+    {% if product and product.shop == None or product.shop == shop %}
+        <h1>{{ product.name }}</h1>
+    {% elif product %}
+        <h1>Upravit cenovou nabídku</h1>
+        <p>Produkt může editovat vlastník - {{ product.shop.user.email }}</p>
+    {% else %}
+        <h1 id="add_title">Přidat nový výrobek</h1>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
+        {% csrf_token %}
+        <div id="product_messages"></div>
+
+        {% if not product %}
+
+        <fieldset class="form-group required{% if form.name.errors %} error{% endif %}">
+            <label class="control-label col-sm-3" for="{{ form.name.id_for_label }}">
+                {{ form.name.label }}
+            </label>
+            <div class="col-sm-9">
+                {{ form.name }}
+                <a href="javascript:void(0)" id="why_hint_a" class="btn btn-link"
+                   data-container="body" data-toggle="popover" data-placement="bottom"
+                   data-url="{% url 'admin-ajax' %}" title="Zabraňujeme duplicitám"
+                   data-content="Pokud prodáváte to samé co někdo jiný, vyberte tento výrobek a nabídněte vaší cenu.">Proč mi napovídá?</a>
+            </div>
+            {% for err in form.name.errors %}{{err}}{% endfor %}
+        </fieldset>
+        <br>
+        {% endif %}
+        {{ offer_form.product }}
+
+        {% hfield offer_form.unit_price %}
+        {% hfield offer_form.note placeholder="Poznámka k ceně" show_label=False col_class="offset-md-3" %}
+        {% hfield offer_form.shipping_price show_info=False %}
+
+        {% if not product or product.shop == shop %}
+
+            {% hfield form.tax show_info=False append="%" %}
+
+            <div id="product_part" style="display:none">
+                <legend id="new_product_title">Nový výrobek</legend>
+                {% hfield form.category %}
+                {% hfield form.description %}
+                {% hfield form.manufacturer %}
+
+                {% hfield form.photo %}
+
+                {% hfield form.expedition_days label_size=3 col_size=3 %}
+            </div>
+
+        {% endif %}
+
+        <fieldset class="form-group" id="submit_buttons">
+            <div id="product_box"></div>
+            <div class="col-xs-12">
+                <small>
+                Ujistěte se, že znáte <a href="{% url 'tariff-list' %}" target="_blank">podmínky a tarify</a>.
+                </small>
+                <br><br>
+                <input type="submit" value="Uložit{% if offer and not offer.active %} (a odkrýt){% endif %}" class="btn btn-success btn-submit"/>
+            </div>
+
+            {% if offer %}
+            <a class="small-tb-padding block text-right" data-toggle="collapse" href="#modify_buttons" aria-expanded="false" aria-controls="modify_buttons">
+                +{% if offer.active %} skrýt nebo{%endif%} odstranit
+            </a>
+
+            <div id="modify_buttons" class="collapse">
+            {% if offer.active %}
+            <div class="col-xs-12 col-md-6">
+                    <input type="submit" value="Skrýt" class="btn btn-info btn-submit" name="hide"/>
+            </div>
+            {% endif %}
+
+            <div class="col-xs-12 col-md-6">
+                <input type="submit" value="Odstranit" class="btn btn-danger btn-submit" name="remove"/>
+            </div>
+            </div>
+            {% endif %}
+        </fieldset>
+
+        {% if product and product.shop != shop %}
+
+        <div class="thumbnail">
+            {% include "core/include/product-box.html" with object=product no_forms_please=True %}
+        </div>
+
+        {% endif %}
+    </form>
+</div>
+
+{% endblock %}

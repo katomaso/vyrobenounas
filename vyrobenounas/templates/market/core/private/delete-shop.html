@@ -1,0 +1,21 @@
+{% extends "core/private/home.html" %}
+
+{% block head-title%}Odstranění obchodu{%endblock%}
+
+{% block content %}
+    <div class="content-unit">
+        <h2>Zrušit {{shop.name}}</h2>
+        <p class="lead">
+            Když tak učiníte tak budou odstraněny všechny vaše výrobky.<br>
+            Nedořešené objednávky zůstávají, ovšem ztrácíte přístup do administračního
+            rozhraní, takže vše musíte dořešit přes email nebo osobně.
+        </p>
+        <br>
+        <p>
+            <form method="post">
+                {% csrf_token %}
+                Jsem si jistý že chci &nbsp;&nbsp;<input type="submit" name="delete" value="zavřít obchod" class="btn btn-large btn-danger"/>
+            </form>
+        </p>
+    </div>
+{% endblock %}

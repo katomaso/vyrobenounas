@@ -1,0 +1,30 @@
+{% extends "core/private/home.html" %}
+{% load core_tags %}
+
+{% block head-title%}Správa produktů{%endblock%}
+
+{% block content %}
+<div class="content-unit small-bottom-padding">
+    <h1>Vámi nabízené zboží</h1>
+    <div class="decorator-bar">
+        <span class="btn-group">
+            <a href="{% get_params active=1 %}" class="btn {%if active%} active{%endif%}">aktivní</a>
+            <a href="{% get_params active=0 %}" class="btn {%if not active%} active{%endif%}">neaktivní</a>
+        </span>
+    </div>
+
+</div>
+
+<div class="row boxes">
+{% for object in object_list %}
+    <div class="col-lg-4 col-sm-6 col-xs-12 relative">
+        {% include "core/include/admin-product-box-small.html" %}
+    </div>
+    {% if forloop.counter|divisibleby:"3" %}
+        </div>
+        <div class="row-fluid boxes">
+    {% endif %}
+{% endfor %}
+</div>
+{% include "core/include/paginator-bar.html" %}
+{% endblock content%}

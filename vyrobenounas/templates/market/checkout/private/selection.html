@@ -1,0 +1,90 @@
+{% extends "checkout/base.html" %}
+{% load core_tags fields %}
+
+
+{% block head-title%}{{block.super}} - kontaktní údaje{%endblock%}
+
+
+{% block upper-javascript %}
+  {{block.super}}
+  <script type="text/javascript" src="{{STATIC_URL}}js/ajax-csrf.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/checkout.selection.js"></script>
+{% endblock upper-javascript %}
+
+
+{% block checkout-address %}
+  <form method="POST" class="form-horizontal" id="form0">
+    {% csrf_token %}
+
+    {% if email_form %}
+    <div class="row">
+      <div class="col-md-6 col-xs-12">
+        {% hfield email_form.email label_size=4 %}
+        {# {% hfield email_form.captcha show_label=False %} #}
+        <div id="login_link" class="row">
+          <div class="col-xs-12 col-md-9 offset-md-3">
+          Tento email známe! <a id="login_link_send" href="{% url 'account_login' %}">Přihlašte se prosím.</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    {% endif %}
+    <div class="row">
+      <div class="col-md-6 col-xs-12">
+      {% hfield addresses_form.necessary show_info=False  label_size=4 %}
+      </div>
+    </div>
+    <div class="row" id="address_container" style="display:none">
+      <div class="col-md-6 col-xs-12">
+        <h3>
+          Fakturační adresa<br>
+          <span style="font-size:60%">({{addresses_form.addresses_the_same}} {{addresses_form.addresses_the_same.label}})</span>
+        </h3>
+        {% hfield addresses_form.billing.name %}
+        {% hfield addresses_form.billing.street %}
+        {% hfield addresses_form.billing.city %}
+        {% hfield addresses_form.billing.zip_code %}
+
+        {% hfield addresses_form.billing.business_id %}
+        {% hfield addresses_form.billing.tax_id %}
+      </div>
+
+      <div class="col-md-6 col-xs-12">
+        <div id="billing_container" style="display:none">
+        <h3>Dodací adresa <br><br></h3>
+        {% hfield addresses_form.shipping.name %}
+        {% hfield addresses_form.shipping.street %}
+        {% hfield addresses_form.shipping.city %}
+        {% hfield addresses_form.shipping.zip_code %}
+
+        {% hfield addresses_form.shipping.business_id %}
+        {% hfield addresses_form.shipping.tax_id %}
+        </div>
+      </div>
+    </div> <!-- class row -->
+    <!-- end adresa -->
+    <br>
+    <div class="row">
+      <div class="col-xs-10">
+        <button type="submit" class="btn btn-success btn-submit" name="send" value="">
+          Vybrat dopravu
+        </button>
+      </div>
+      <div class="col-xs-2">
+        <button type="submit" class="btn btn-danger btn-submit" name="abort">
+          Zrušit
+        </button>
+      </div>
+    </div>
+  </form>
+{% endblock checkout-address %}
+
+
+{% block checkout-shipping %}
+  <em>v příštím kroku</em>
+{% endblock checkout-shipping %}
+
+{% block checkout-payment %}
+  <em>v posledním kroku</em>
+{% endblock checkout-payment %}

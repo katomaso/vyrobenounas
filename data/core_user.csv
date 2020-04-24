@@ -1,0 +1,9 @@
+﻿id	password	last_login	is_superuser	uid	name	email	slug	phone	karma	avatar	is_staff	is_active	date_joined	first_name	last_name
+2	!T8tdDTnAC5TT7gcZ1H4poU0eYCWNh6xLRLWXT5ut		f	1OMG2NQV	""	tenilka@seznam.cz	tenilka		10	""	f	f	2016-01-27 11:12:40.345341+00		
+4	!0YNjfGuDYwZFJyrMrSwo1LNuUcbeTn71g2aORZTT		f	TOY6eLNj	""	cernohousova.m@seznam.cz	cernohousovam		10	""	f	f	2016-04-05 12:14:35.793466+01		
+1	pbkdf2_sha256$24000$UpiZrdfSgAe4$Tl0g6fIpLVRB7UH7L/5g+TcQCbJGpai6TdEw7hMFPGA=	2016-05-08 13:10:00.149532+01	t	""	Tomáš Peterka	peterka@webriginals.com	tomas-peterka		10	""	t	t	2016-01-10 18:02:13.481618+00		
+5	!VAbar5X72cOeorOOq2dfwOw2rRXr8SrTS6Nt1684		f	asGkCgT1	""	modry.marek@gmail.com	modrymarek		10	""	f	f	2016-06-28 15:16:07.928705+01		
+6	!rochn3TWiChZ4CGKLyL6ipF0Uznqvru9TS91OqbF		f	LrIP4WA2	""	maky.lazarova@gmail.com	makylazarova		10	""	f	f	2016-09-12 17:03:50.425812+01		
+7	!mQeFAnGC7DwrazUycfQbh7D4q23DIPvUDNKx1o1o		f	x0Z7prRD	""	tanulka.k@gmail.com	tanulkak		10	""	f	f	2016-09-12 17:34:28.533539+01		
+8	!6ZydAYxWWRDlBrKhht51MQvwT9sbZ0SNwb1PtC6p		f	bgxToBCA	""	morav.river@seznam.cz	moravriver		10	""	f	f	2016-09-12 18:33:15.18716+01		
+9	!VF4Ysi4tPncRFk77Nb3cYvAJPOWd01psVu1z85ns		f	lQn7RTCZ	""	nejdlovamartina@seznam.cz	nejdlovamartina		10	""	f	f	2016-10-23 22:02:49.813155+01		

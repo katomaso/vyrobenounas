@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-sm-6 col-xs-12">
+        {% if shop.description %}{{shop.description|linebreaks}}{% endif %}
+    </div>
+    <div class="col-sm-6 col-xs-12">
+        {% if shop.position %}
+            <h4>Adresa</h4>
+            <p>
+            {{ shop.address.name}}, {{ shop.position.street }},
+            {{ shop.position.city }}, {{ shop.position.country }}
+            </p>
+        {% endif %}
+
+        {% if shop.openings %}
+            <h4>Otevírací doba</h4>
+            {{ shop.openings|linebreaks }}
+        {% endif %}
+
+        <h4>Fakturační údaje</h4>
+        {{ shop.address.as_text|linebreaks }}
+        <p><strong>bankovní účet:</strong> {{ shop.bank_account }}</p>
+
+        {% if shop.position %}
+            <script type="text/javascript" src="{{STATIC_URL}}map/jak.js"></script>
+            <script type="text/javascript" src="{{STATIC_URL}}map/smap.js"></script>
+            <script type="text/javascript" src="{{STATIC_URL}}map/config.js"></script>
+
+            <link rel="stylesheet" type="text/css" href="https://api4.mapy.cz/css/api/api.css?v100">
+            <link rel="stylesheet" type="text/css" href="https://api4.mapy.cz/css/api/card.css?v100">
+            {% include "core/include/show-map.html" %}
+        {% endif %}
+
+    </div>
+</div>
+
+<div class="row">
+    <h2 class="margined">Komentáře</h2>
+    {% render_comment_list for shop %}
+    <br>
+    {% if user.is_authenticated %}
+        {% render_comment_form for shop %}
+    {% endif %}
+</div>

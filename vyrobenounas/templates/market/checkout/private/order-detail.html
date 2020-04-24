@@ -1,0 +1,53 @@
+{% extends "core/private/home.html" %}
+{% load core_tags %}
+
+{% block head-title%}Detail objednávky #{{order.pk}} z {{order.created}}{%endblock%}
+
+{% block content %}
+    <div class="content-unit">
+        <h1 class="pull-left">Detail objednávky</h1>
+        <span class="pull-right">
+            <strong>Doklady</strong><br>
+            {% if order.order.invoice %}
+            <a href="{% url 'order-download' uid=order.order.uid document='invoice' %}">proforma</a><br>
+            {% endif %}
+            {% if order.invoice and order.is_completed or order.is_shipped %}
+            {# if there is an invoice and the order is paid, or the current viewer is it's seller #}
+            <a href="{% url 'order-download' uid=order.uid document='invoice' %}">faktura</a><br>
+            {% endif %}
+        </span>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ order.get_user.name }}</th>
+                    <th>{{ order.get_user.email }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Fakturační adresa</strong><br>
+                        {{ order.billing_address_text|linebreaksbr }}</td>
+                    <td><strong>Dodací adresa</strong><br>
+                        {{ order.shipping_address_text|linebreaksbr }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-bordless">
+            <thead>
+                <tr>
+                    <th>Cena celkem {{ order.order_total|as_price }}</th>
+                    <th>{{ order.get_user.email }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Fakturační adresa</strong><br>
+                        {{ order.billing_address_text|linebreaksbr }}</td>
+                    <td><strong>Dodací adresa</strong><br>
+                        {{ order.shipping_address_text|linebreaksbr }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

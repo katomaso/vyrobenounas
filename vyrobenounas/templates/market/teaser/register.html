@@ -1,0 +1,32 @@
+{% extends "teaser/home.html" %}
+{% load fields %}
+
+{% block head-title%}Vyrobenounas.cz - předregistrace{%endblock%}
+
+{% block content %}
+    <h1>Předregistrace</h1>
+    {% block messages %}
+      {% if messages %}
+      <div class="messages">
+          {% for message in messages %}
+          <div class="alert{% if message.tags %} alert-{{ message.tags }}{% endif %}">
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+            {{ message }}
+          </div>
+          {% endfor %}
+      </div>
+      {% endif %}
+    {% endblock %}
+    <br>
+    <p class="left">
+        Zvolte si heslo pro přístup ke svému účtu (obchodu).
+    </p>
+    <form method="post" class="form-horizontal">
+        {% csrf_token %}
+        {% hfield nameform.name label_size=4 col_size=5 class='form-control' %}
+        {% hfield form.new_password1 label_size=4 col_size=5 class='form-control' %}
+        {% hfield form.new_password2 label_size=4 col_size=5 class='form-control' %}
+        <br>
+        <input type="submit" class="btn btn-success btn-submit" value="Nastavit"/>
+    </form>
+{% endblock %}

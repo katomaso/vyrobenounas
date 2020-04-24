@@ -1,0 +1,12 @@
+{% extends "core/include/show-map.html" %}
+
+{% block map-container %}
+    <div class="content-unit" id="map-container">
+        <a href="{% url 'shops' %}" class="btn btn-decorator">
+            <i class="icon-resize-full icon-white"></i>&nbsp;
+            Seznam všech prodejců
+        </a>
+        <h2 class="pull-left">Kde nakoupit české výrobky</h2>
+        <div class="shop-map">{{block.super}}</div>
+    </div>
+{% endblock %}

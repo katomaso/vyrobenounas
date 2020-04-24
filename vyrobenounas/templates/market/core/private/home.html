@@ -1,0 +1,189 @@
+{% extends "private.html" %}
+{% load i18n core_tags %}
+
+{% block head-title%}Administrace obchodu{%endblock%}
+
+{% block upper-javascript %}
+{{ block.super }}
+  <script type="text/javascript" src="{{ STATIC_URL }}js/ajax-csrf.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/checkout.order.js"></script>
+{% endblock %}
+
+
+{% block content %}
+  <div class="row">
+    <div class="col-xs-12 content-unit no-bottom-padding">
+      <div class="decorator-bar">
+        <a href="{% url 'shop' slug=shop.slug %}" class="btn glyphicon glyphicon-eye-open" data-toggle="tooltip" title="Zobrazit Váš obchod"></a>
+        <a href="{% url 'admin-shop' %}" class="btn glyphicon glyphicon-pencil" data-toggle="tooltip" title="Upravit údaje"></a>
+      </div>
+      <h1>{{ shop.name }}</h1>
+      <h2 class="subline">{{shop.motto}}</h2>
+      {% comment %}
+      {% if shop.logo %}
+      <img class="pull-right image" src="{{ shop.logo.thumbnail.url|as_media }}"/>
+      {% endif %}
+      {% endcomment %}
+      <br>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 no-left-padding">
+      <div class="content-unit relative small-bottom-padding">
+        <div class="decorator-bar">
+          <a href="{% url 'admin-product-add' %}" class="btn glyphicon glyphicon-plus" data-toggle="tooltip" title="Přidat výrobek"></a>
+          <a href="{% url 'admin-products' %}" class="btn glyphicon glyphicon-fullscreen"></a>
+        </div>
+        <h4><a href="{% url 'admin-products' %}">Nabízené zboží ({{ offers_count }})</a></h4>
+        <table class="table table-bordless{% if offers %} rows-hover{% endif %}">
+          <thead>
+            <tr>
+              <th>Výrobek</th>
+              <th>Bez DPH</th>
+              <th>Prodáno</th>
+            </tr>
+          </thead>
+          <tbody class="text-right">
+          {% for offer in offers %}
+            <tr>
+              <td class="text-left">
+                <a href="{% url 'admin-product' slug=offer.product.slug %}">
+                  {{offer.name}}
+                </a>
+              </td>
+              <td>
+                <a href="{% url 'admin-product' slug=offer.product.slug %}">
+                  {{offer.unit_price|as_price}}
+                  {% if offer.note %}<br>{{ offer.note }}{% endif %}
+                </a>
+              </td>
+              <td>{{offer.sold}}</td>
+            </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4">Nanabízíte žádné zboží</td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="content-unit relative small-bottom-padding">
+        <h4><a href="{% url 'admin-products' %}?active=0">Skryté zboží</a></h4>
+        <table class="table table-bordless{% if offers_deleted %} rows-hover{%endif%}">
+          <thead>
+            <tr>
+              <th>Výrobek</th>
+              <th>Bez DPH</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for offer in offers_deleted %}
+            <tr>
+              <td>
+                <a href="{% url 'admin-product' slug=offer.product.slug %}">
+                  {{offer.name}}
+                </a>
+              </td>
+              <td>
+                <a href="{% url 'admin-product' slug=offer.product.slug %}">
+                  {{offer.unit_price}}
+                </a>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td>
+                Nemáte žádné skryté zboží. Skryté zboží se nezapočítávají do tarifu a
+                můžete je kdykoli "odkrýt" jedním kliknutím. Užitečné pokud nabízíte
+                sezóní zboží.
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div> <!-- end outline -->
+    </div> <!-- end col-sm-6 -->
+
+    <div class="col-sm-6 no-right-padding">
+      <div class="content-unit relative small-bottom-padding relative">
+        <a href="{% url 'order-list' %}" class="btn btn-decorator glyphicon glyphicon-fullscreen"></a>
+        <h4><a href="{% url 'order-list' %}">Objednávky</a></h4>
+        <table class="table table-bordless{% if orders.completed or orders.confirmed %} rows-hover{% endif %}">
+          <tbody>
+            <tr>
+              <td><strong>Odeslané</strong></td>
+              <td><strong>{{ orders_count.shipped }}</strong></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>Zaplacené</strong></td>
+              <td><strong>{{ orders_count.completed }}</strong></td>
+              <td></td>
+            </tr>
+            {% for order in orders.completed %}
+            <tr class="tr-condensed">
+              <td>&nbsp;
+                <a href="{% url 'order-download' slug=order.uid document='invoice' %}" class="no-decorations">
+                  {{order.get_user}} z {{order.created|date:"j. E"}}
+                </a>
+              </td>
+              <td>
+                <a href="{% url 'order-download' slug=order.uid document='invoice' %}">
+                  {{ order.order_total|as_price }}
+                </a>
+              </td>
+              <td class="order-actions">
+              <form action="{% url 'order-change-status' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="uid" value="{{ order.uid }}"/>
+                <select name="status" class="submit_on_change">
+                  <option>Přesunout</option>
+                  <option value="{{ order.SHIPPED }}">Odeslané</option>
+                </select>
+              </form>
+              </td>
+            {% endfor %}
+            <tr>
+              <td><strong>Potvrzené</strong></td>
+              <td><strong>{{ orders_count.confirmed }}</strong></td>
+              <td></td>
+            </tr>
+            {% for order in orders.confirmed %}
+            <tr class="tr-condensed">
+              <td>&nbsp;
+                <a href="{% url 'order-download' slug=order.uid document='proforma' %}">
+                  {{order.get_user}} z {{order.created|date:"j. E"}}
+                </a>
+              </td>
+              <td>
+                <a href="{% url 'order-download' slug=order.uid document='proforma' %}">
+                  {{ order.order_total|as_price }}
+                </a>
+              </td>
+              <td class="order-actions">
+              <form action="{% url 'order-change-status' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="uid" value="{{ order.uid }}"/>
+                <select name="status" class="submit_on_change">
+                  <option>Přesunout</option>
+                  <option value="{{ order.PAID }}">Zaplacené</option>
+                  <option value="{{ order.SHIPPED }}">Odeslané</option>
+                </select>
+              </form>
+              </td>
+            {% endfor %}
+            <tr>
+              <td><strong>Nedokončené</strong></td>
+              <td><strong>{{ orders_count.confirming }}</strong></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div> <!-- col-sm-6 -->
+  </div> <!-- row-flud -->
+
+{% endblock %}

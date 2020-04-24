@@ -1,0 +1,13 @@
+{% if offer.quantity != 0 %}
+<form action="{% url 'cart-item' format='json' %}" method="put" id="form{{offer.pk}}" class="{% if form_class %} {{form_class}}{% endif %}">
+        {% csrf_token %}
+        <div class="input-group">
+          <input type="{{number_type}}" value="1" name="quantity" class="form-control" min="0"{% if offer.quantity > 0 %} max="{{offer.quantity}}"{% endif %}/>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-info add-to-cart" data-text="{{button_text}}">{{button_text}}
+            </button>
+          </span>
+        </div><!-- /input-group -->
+        <input type="hidden" name="pk" value="{{offer.pk}}"/>
+</form>
+{% endif %}

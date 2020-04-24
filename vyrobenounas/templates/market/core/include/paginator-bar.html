@@ -1,0 +1,52 @@
+{% load core_tags %}
+
+{% if object_list %}
+<div class="row">
+    <div class="col-sm-6">
+        {% if object_list.has_other_pages %}
+            <ul class="pagination pagination-centered">
+                <li class="{% if not object_list.has_previous %}disabled{% endif %}">
+                    {% if object_list.has_previous %}
+                        <a href="{% get_params page=object_list.previous_page_number %}">předchozí</a>
+                    {% else %}
+                        <span>předchozí</span>
+                    {% endif %}
+                </li>
+
+                {% for page in page_range %}
+                <li class="{% if page == object_list.number %}active{% endif %}">
+                    <a href="{% get_params page=page %}">
+                    {{ page }}
+                    </a>
+                </li>
+                {% endfor %}
+
+                <li class="{% if not object_list.has_next %}disabled{% endif %}">
+                    {% if object_list.has_next %}
+                        <a href="{% get_params page=object_list.next_page_number %}">následující</a>
+                    {% else %}
+                        <span>následující</span>
+                    {% endif %}
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+
+    {% comment %}
+    <div class="col-sm-6">
+        <ul class=" pagination pagination-centered">
+            <li><span>Záznamů na stránku</span></li>
+            <li{% if per_page and per_page == 15 %} class="active"{% endif %}>
+                <a href="{% get_params pp=15 %}">15</a>
+            </li>
+            <li{% if per_page and per_page == 30 %} class="active"{% endif %}>
+                <a href="{% get_params pp=30 %}">30</a>
+            </li>
+            <li{% if per_page and per_page == 60 %} class="active"{% endif %}>
+                <a href="{% get_params pp=60 %}">60</a>
+            </li>
+        </ul>
+    </div>
+    {% endcomment %}
+</div>
+{% endif %}

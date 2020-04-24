@@ -1,0 +1,8 @@
+{% load core_tags %}
+
+<div class="box-small">
+  <h3><a href="{{ object.get_url_path }}">{{object.name}}</a></h3>
+  {% if object.logo %}<img src="{{ object.logo|as_media }}"/>{% endif %}
+  {% if not category %}<h4>{{object.category}}</h4>{% endif %}
+  <p>{{object.description}}</p>
+</div>

@@ -1,0 +1,18 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}Ověřte svojí emailovou adresu{% endblock %}
+
+{% block content %}
+    <h1>Ověřte prosím svojí emailovou adresu</h1>
+
+    <p>
+    Zaslali jsme vám potvrzovací email. Dále postupujte podle instrukcí v emailu.
+    V případě že email neobdržíte během pár minut, tak nás <a href="mailto:ahoj@vyrobenounas.cz?subject=Potvrzovaci%20email">kontaktujte</a>.
+    </p>
+    <p>
+    Mezitím klidně pokračujte v <a href="{% url "home" %}">prohlížení českého zboží</a>.
+    </p>
+
+{% endblock %}

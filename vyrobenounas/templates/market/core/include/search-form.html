@@ -1,0 +1,15 @@
+{% load core_tags %}
+  <form action="{% url_maybe 'search' %}" role="form" class="form-search">
+    <label for="search-term" class="sr-only">Hledaný výraz</label>
+    <div class="input-group">
+      <input type="search" name="q" id="search-term" placeholder="Prohledat zboží"
+             class="form-control"
+             {% if term %}value="{{term}}"{% endif %}>
+      {% if shop %}<input type="hidden" name="obchod" value="{{shop.id}}"/>{% endif %}
+      <span class="input-group-btn">
+      <button class="btn" name="engine" value="{{ engine }}">
+        <span class="glyphicon glyphicon-search white"></span>
+      </button>
+      </span>
+    </div>
+  </form>

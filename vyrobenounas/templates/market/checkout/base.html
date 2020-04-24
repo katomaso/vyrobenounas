@@ -1,0 +1,30 @@
+{% extends "neutral.html" %}
+
+{% block head-title%}Odbavení{%endblock%}
+
+{% block backlinks %}
+    <li> <a href="{% url 'cart' %}">Košík</a> </li>
+    <li> <a href="{{ request.get_full_url }}">Odbavení</a> </li>
+{% endblock backlinks %}
+
+{% block content %}
+
+  {% block checkout-decorator %}
+    <a href="{% url 'home' %}" class="btn btn-decorator">
+      <i class="icon-remove icon-white"></i></a>
+  {% endblock checkout-decorator %}
+
+  <h1>Objednávka</h1>
+
+  {% block checkout-address %}
+  {% endblock checkout-address %}
+
+  <h2>Doprava</h2>
+  {% block checkout-shipping %}
+  {% endblock checkout-shipping %}
+
+  <h2>Shrnutí a platba</h2>
+  {% block checkout-payment %}
+  {% endblock checkout-payment %}
+
+{% endblock %}

@@ -1,0 +1,94 @@
+{% if map_markers %}
+
+    {% block map-container %}
+    <div id="map" class="map shadowed"></div>
+    {% endblock %}
+
+    {% block map-script %}
+    <script type="text/javascript">
+        function reload_map(center) {
+            var map_div = $("#map");
+            if(!multishop.hasOwnProperty('map')) {
+                if (!center) {
+                    center = SMap.Coords.fromWGS84(15.41, 49.78);
+                }
+                var map = new SMap(JAK.gel("map"), center, 6);
+                map.addDefaultLayer(SMap.DEF_BASE).enable();
+
+                map.addControl(new SMap.Control.Mouse(SMap.MOUSE_PAN | SMap.MOUSE_ZOOM));
+                map.addControl(new SMap.Control.Keyboard(SMap.KB_PAN | SMap.KB_ZOOM));
+                map.addControl(new SMap.Control.Selection(2));
+                map.addControl(new SMap.Control.ZoomNotification());
+
+                var labels = {
+                    0: "Světadíly",
+                    3: "Státy",
+                    6: "Kraje",
+                    9: "Města",
+                    12: "Obce",
+                    15: "Ulice",
+                    18: "Domy",
+                    19: "Vidím do oken"
+                };
+                var zoom_control = new SMap.Control.Zoom(labels, {titles:["Přiblížit", "Oddálit"]});
+                map.addControl(zoom_control, {top: "10px", right: "10px"});
+                map.setCursor("move");
+                map.setZoom(10);
+
+                multishop.map = map;
+                // map_div.addClass("map_loaded");
+
+                map_add_marks({{map_markers|safe}});
+            }
+        }
+
+        function map_add_marks(data) {
+            var map = multishop.map;
+            var layer = new SMap.Layer.Marker();
+
+            if(!data.length) {
+                return;
+            }
+
+            if (data.length > 1) {
+                var clusterer = new SMap.Marker.Clusterer(map, 100);
+                layer.setReposition({});
+                layer.setClusterer(clusterer);
+            }
+
+            var positions = Array();
+            for(var i=0; i<data.length; i++) {
+                var item = data[i];
+                var card = new SMap.Card();
+                card.getHeader().innerHTML = item.head;
+                card.getBody().innerHTML = item.body;
+
+                var pos = SMap.Coords.fromWGS84(parseFloat(item.x), parseFloat(item.y));
+                positions.push(pos);
+                var marker = new SMap.Marker(pos, item.title);
+                marker.decorate(SMap.Marker.Feature.Card, card);
+                layer.addMarker(marker);
+            }
+
+            if (data.length > 0) {
+                var center = map.computeCenterZoom(positions);
+                if (center[1] > 14) {
+                    center[1] = 14;
+                }
+                map.setCenterZoom(center[0], center[1]);
+            }
+
+            map.addLayer(layer).enable();
+        }
+    </script>
+    {% endblock %}
+
+    {% block map-launcher %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            reload_map(null);
+        });
+    </script>
+    {% endblock %}
+
+{% endif %}

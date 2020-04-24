@@ -1,0 +1,25 @@
+{% load core_tags %}
+
+<div class="box-small">
+    {% block box-small-image %}
+    {% if object.product.photo %}
+    <a href="{{ object.get_url_path }}" class="photo">
+        <img src="{{ object.product.photo.thumbnail|as_media }}" alt="fotka {{ object.get_name }}"/>
+    </a>
+    {% endif %}
+    {% endblock box-small-image %}
+    {% block box-small-desc %}
+    <div class="description">
+        <h3><a href="{{ object.get_url_path }}">{{ object.name }}</a></h3>
+        <p>{{ object.product.description|linebreaksbr|truncatechars:300 }}</p>
+        <div class="row">
+            <div class="col-xs-12 price">
+                {{ object.price|as_price }}
+            </div>
+            <div class="col-xs-12">
+                {% add_to_cart_form object form_class="form-inline" button_text="Kup" %}
+            </div>
+        </div>
+    </div>
+    {% endblock box-small-desc %}
+</div>

@@ -1,0 +1,77 @@
+{% extends "neutral.html" %}
+{% load core_tags %}
+
+{% block head-title%}Vyrobenounas.cz - služby a ceník{%endblock%}
+
+{% block backlinks %}
+    <li> <a href="{{ request.get_full_url }}">Ceny a Služby</a> </li>
+{% endblock backlinks %}
+
+{% block content %}
+    <h1>Služby Vyrobeno u Nás</h1>
+    <p>
+        Vyrobeno u Nás poskytuje prostor pro obchodování českých výrobků.
+        Prodejci (obchodníci) jsou povinni mít registrovanou živnost v České
+        republice a nabízet zde pouze zboží, které odpovídá alespoň jednomu
+        z následujcích kritérií:
+        <ul>
+            <li>Produkt má značku českého výrobku
+                <ul>
+                    <li><a href="http://www.ceskyvyrobek.eu/">český výrobek</a></li>
+                    <li><a href="http://www.eklasa.cz/">klasa</a></li>
+                </ul>
+            </li>
+            <li>Produkt je vyroben (z větší části) na území České republiky</li>
+            <li>Produkt je prokazatelně vyroben z českých surovin</li>
+        </ul>
+        <em>
+            Kontroly podmínek jsou prováděny osobně týmem Vyrobeno u Nás a
+            jsou naprosto náhodné. V případě nesplnění podmínek vám stáhneme
+            výrobky z obchodu a budeme si vás pamatovat. Neukládáme pokuty ani
+            nebudeme vyvíjet žádné právní kroky. Předpokládáme, že
+            registrovaní obchodníci sdílí nadšení pro české zboží a nebudou tu dělat paseku.
+        </em>
+    </p><br>
+    <h1>Tarif služeb Vyrobeno u nás.cz</h1>
+    <p>
+        Snažíme se nabídnout férové ceny a proto jsme přišli s konceptem, že platíte méně jak
+        1% z celkové ceny všech výrobků co prodáváte. Měsíční platba se ovšem odvíjí i od množství výrobků, které zde nabízíte. Nezdá se nám fér obchodník který nabízí 2 pohovky za 30 000 platil
+        o hodně více než obchodník s 50 malými předměty v objemu ceny 5 000 Kč. Proto se měsíční
+        platba odvíjí jak od počtu výrobků, tak o celkové ceny způsobem uvedeným v následujcím seznamu tarifů.
+    </p>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Tarif</th>
+                <th>Měsíčně bez DPH</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+                <tr>
+                    <td>{{ object.name }} {{ object.description }}</td>
+                    <td>{{ object.monthly }} Kč</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {%comment%}
+    <p>
+        <img src="{{ STATIC_URL }}images/heads-up.png" class="img-inline" />
+        Nevyhovuje vám žádný tarif? Jsou vaše předpokládané tržby nižší než náklady na provoz obchodu?
+        <a href="mailto:ahoj@vyrobenounas.cz">Napište nám</a> a my vám navrhneme nabídku na míru.
+    </p>
+    {%endcomment%}
+    <p>
+    Tarif se mění automaticky podle využívání našich služeb (nahoru i dolu, žádné starosti). Tarify jsou
+    účtovány za každý započatý den. Při změně/ukončení tarifu uprostřed měsíce vám bude naúčtována
+    poměrná část ve dnech. Při každé změně budete informováni emailem. Pokud vám přepneme tarif a nejste s tím
+    spokojeni, proveďte co nejrychleji takové změny, abyste se dostali na tarif který vám nejvíce vyhovuje.
+    </p>
+    <br>
+
+    <h2>Provozovatel</h2>
+    <p>
+    Ing. Tomáš Peterka, IČ: 87510162. Jakékoliv připomínky pište na <a href="mailto:ahoj@vyrobenounas.cz">ahoj@vyrobenounas.cz</a>
+    </p>
+{% endblock content %}

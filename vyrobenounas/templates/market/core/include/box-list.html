@@ -1,0 +1,25 @@
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-lg-4 boxes">
+            {% for object in object_list %}
+                    {% include box %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-4 boxes">
+            {% for object in object_list %}
+                {% if forloop.counter|add:"-2"|divisibleby:"3" %}
+                    {% include box %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-4 boxes">
+            {% for object in object_list %}
+                {% if forloop.counter|divisibleby:"3" %}
+                    {% include box %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    {% include "core/include/paginator-bar.html" %}

@@ -1,0 +1,20 @@
+{% load core_tags %}
+
+<div class="grid-item" type="products">
+	<a href="{% url 'product' slug=object.slug %}" class="gridWrap t200" gridId="1">
+		<div class="gridImgWrap">
+			{% if object.photo %}
+				<img class="gridImg" src="{{ object.photo.thumbnail|as_media }}" alt="fotka {{ object.get_name }}" />
+			{% else %}
+				<img class="gridImg" src="images/no-photo.jpg" alt="fotka {{ object.get_name }}" />
+			{% endif %}
+			<div class="manufacturerImg"></div>
+		</div>
+		<div class="productTextWrap">
+			<div class="productTitle gridTitle">{{ object.get_name }}</div>
+			<div class="productPrice">{{ object.price|as_price }}</div>
+			<div class="manufacturer">manuf.name</div>
+			<div class="from">manuf.place</div>
+		</div>
+	</a>
+</div>

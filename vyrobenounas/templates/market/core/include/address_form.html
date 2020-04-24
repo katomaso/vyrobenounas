@@ -1,0 +1,18 @@
+{% load fields %}
+
+{% hfield form.name %}
+{% hfield form.street %}
+{% hfield form.city %}
+{% hfield form.business_id %}
+{% hfield form.tax_id %}
+{% hfield form.extra class='width75' %}
+
+{% comment %}
+
+<div class="form-group">
+    <label class="col-sm-12">{{form.extra.label}}</label>
+    <div class="col-sm-12">
+        {% ifield form.extra class='width75' %}
+    </div>
+</div>
+{% endcomment %}

@@ -1,0 +1,33 @@
+
+<div class="col-xs-12 col-sm-6 col-md-4">
+{% for comment in comment_list %}
+  {% if forloop.counter|add:"-1"|divisibleby:"3" %}
+    {% include "comments/_comment.html" %}
+  {% endif %}
+{% endfor %}
+{% if comment_list|length|divisibleby:"3" %}
+  {% include "comments/_form.html" %}
+{% endif %}
+</div>
+
+<div class="col-xs-12 col-sm-6 col-md-4">
+{% for comment in comment_list %}
+  {% if forloop.counter|add:"-2"|divisibleby:"3" %}
+    {% include "comments/_comment.html" %}
+  {% endif %}
+{% endfor %}
+{% if comment_list|length|add:"-1"|divisibleby:"3" %}
+  {% include "comments/_form.html" %}
+{% endif %}
+</div>
+
+<div class="col-xs-12 col-sm-6 col-md-4">
+{% for comment in comment_list %}
+  {% if forloop.counter|add:"-3"|divisibleby:"3" %}
+    {% include "comments/_comment.html" %}
+  {% endif %}
+{% endfor %}
+{% if comment_list|length|add:"-2"|divisibleby:"3" %}
+  {% include "comments/_form.html" %}
+{% endif %}
+</div>

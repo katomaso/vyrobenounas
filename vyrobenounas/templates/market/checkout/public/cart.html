@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% load core_tags %}
+
+{% block head-title%}Vyrobenounas.cz - košík{%endblock%}
+
+{% block header-block %}
+{% endblock %}
+
+
+{% block content %}
+<div class="content-unit">
+  <h2>
+    Váš košík{%if not cart_items%} ... je prázdný!{%endif%}
+    <a href="/" class="btn right obvious-link">&lt; zpět k nakupování</a>
+  </h2>
+
+  {% if not cart_items %}
+  <p>Připravili jsme pro Vás pár tipů kam teď</p>
+  <ul class="nolist">
+      <li class="gimme-space"><a href="/">Hlavní stránka</a></li>
+
+      {% add_random_instance "product" %}
+      {% if random_product %}
+      <li class="gimme-space"><a href="{% url 'product' slug=random_product.slug %}">Náhodný produkt ({{random_product}})</a></li>
+      {% endif %}
+
+      {% add_random_instance "category" %}
+      {% if random_category %}
+      <li class="gimme-space"><a href="{% url 'products-category' rest=random_category.path %}">Náhodná kategorie ({{random_category.full_name}})</a></li>
+      {% endif %}
+
+      {% add_random_instance "shop" %}
+      {% if random_shop %}
+      <li class="gimme-space"><a href="{% url 'shop' slug=random_shop.slug %}">Náhodný obchod ({{random_shop}})</a></li>
+      {% endif %}
+
+      {% add_random_instance "manufacturer" %}
+      {% if random_manufacturer %}
+      <li class="gimme-space"><a href="">Náhodný výrobce ({{random_manufacturer}})</a></li>
+      {% endif %}
+
+  </ul>
+  {% endif %}
+
+  {% if cart_items %}
+        <table class="table cart">
+          <thead>
+            <tr>
+            <th>Položka</th>
+            <th>Cena za kus</th>
+            <th>Množství</th>
+            <th>Celkem s DPH</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for cart_item in cart_items %}
+                <tr>
+                  <td>
+                    {{ cart_item.item.name }}
+                  </td>
+                  <td>
+                    {{ cart_item.item.unit_price|as_price }}</td>
+                  </td>
+                  <td>
+                    <form method="post" action="{% url 'cart-item' pk=cart_item.pk %}">
+                      {% csrf_token %}
+                      <div class="input-group" style="width: 10rem">
+                        <input type="number" name="quantity" value="{{ cart_item.quantity }}" class="form-control" min="0"{% if cart_item.item.quantity > 0 %}max="{{cart_item.item.quantity}}"{% endif %}>
+                        {% if cart_item.item.quantity != 0 %}
+                        <span class="input-group-btn">
+                          <input type="submit" class="btn btn-info" value="Upravit"/>
+                        </span>
+                        {% else %}
+                          <span class="alert">vyprodáno</span>
+                        {% endif %}
+                      </div><!-- /input-group -->
+                    </form>
+                  </td>
+                  <td class="price">
+                    {{ cart_item.total|as_price }}
+                  </td>
+                </tr>
+                {% comment %}
+                {% if cart_item.extra_price_fields %}
+                    <tr>
+                      <td colspan="2">&nbsp;</td>
+                      <td>Cena bez daně</td>
+                      <td>{{ cart_item.line_subtotal }}</td>
+                    </tr>
+                  {% for extra_price_field in cart_item.extra_price_fields %}
+                    <tr>
+                      <td colspan="2">&nbsp;</td>
+                      <td>{{ extra_price_field.0 }}</td>
+                      <td>{{ extra_price_field.1 }}</td>
+                    </tr>
+                  {% endfor %}
+                {% endif %}
+                {% endcomment %}
+            {% endfor %}
+          </tbody>
+
+          <tfoot>
+            {% if cart.subtotal_price != cart.total_price %}
+              <tr>
+                <td colspan="2">&nbsp;</td>
+                <td>Cena bez daně</td>
+                <td>{{cart.subtotal_price|as_price}}</td>
+              </tr>
+              {% for extra_price_field in cart.extra_price_fields %}
+                <tr>
+                  <td colspan="2">&nbsp;</td>
+                  <td>{{ extra_price_field.0 }}</td>
+                  <td>{{ extra_price_field.1|as_price }}</td>
+                </tr>
+              {% endfor %}
+            {% endif %}
+            <tr>
+              <td colspan="2">&nbsp;</td>
+              <td><b>Celková cena</b></td>
+              <td class="price"><b>{{cart.total|as_price}}</b></td>
+            </tr>
+          </tfoot>
+        </table>
+        <br>
+        <div class="row">
+          <div class="col-xs-12 col-sm-9">
+            <a id="checkout-submit" class="btn btn-success btn-submit" href="{% url 'checkout-selection' %}">
+              Přejít na odbavení
+            </a>
+          </div>
+          <div class="col-xs-12 col-sm-3">
+            <a id="checkout-delete" class="btn btn-danger btn-submit" href="{% url 'cart' action='delete' %}">
+              Vyprázdnit
+            </a>
+          </div>
+        </div>
+        </p>
+        <br>
+  {% endif %}
+</div>
+{% endblock %}

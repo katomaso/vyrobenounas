@@ -1,0 +1,65 @@
+{% load i18n core_tags checkout_tags cache compress %}
+<!DOCTYPE html>
+<html lang="{% lang %}">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>{% block head-title %}Vyrobeno u Nás.cz{% endblock %}</title>
+    <meta name="description" content="" />
+    <meta name="author" content="Tomáš Peterka" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:image" content="http://vyrobenounas.cz{{ STATIC_URL }}apple-touch-icon-precomposed.png" />
+    <meta property="og:site_name" content="Vyrobeno u Nás" />
+    <meta property="og:title" content="České obchody na jednom místě."/>
+    <meta property="og:type" content="eshop"/>
+
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  {% compress css %}
+  {% block css %}
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/monty/style.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/monty/flipper.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/monty/filters.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/monty/products.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/monty/menu-carousel.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/monty/responsive.css" />
+  <!--
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/common.css" />
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/shop.css" />
+  -->
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/monty/menu-carousel.css" />
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/monty/responsive.css" />
+  {% endblock %}
+  {% endcompress %}
+
+	<!-- JS -->
+  <script type="text/javascript" src="{{STATIC_URL}}jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/monty/plg.flickity.min.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/monty/plg.masonry.min.js"></script>
+  {% compress js %}
+  {% block upper-javascript %}
+  <script type="text/javascript" src="{{STATIC_URL}}js/multishop.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/core.base.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/categories.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/monty/menu.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/monty/home.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/monty/flipper.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/monty/filter.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/monty/popup.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/monty/products.js"></script>
+  {% endblock %}
+  {% endcompress %}
+
+  {% block media %}{# place where to render {{ form.media }} #}{% endblock %}
+
+  <link rel="apple-touch-icon-precomposed" sizes="114x114 144x144" href="{{ STATIC_URL }}apple-touch-icon-precomposed.png" />
+  <link rel="apple-touch-icon" sizes="57x57 72x72" href="{{ STATIC_URL }}apple-touch-icon.png" />
+  <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.png" />
+</head>
+
+  <body{%if classes %} class="{{ classes|join:" " }}"{%endif%}>
+	{% include "core/include/header.html" %}
+	{% block content %}
+	{% endblock %}
+  </body>
+</html>

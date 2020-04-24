@@ -1,0 +1,37 @@
+<form>
+    <fieldset class="rating">
+        <input type="radio" id="star5" name="rating" value="5"{% spaceless %}
+            {% if user.is_anonymous or rating %}disabled="disabled" {% endif %}
+            {% if rating %} class="blue"{% endif %}
+            {% if object.rank < 5 and object.rank > 4 %}checked="checked"{% endif %}
+            {% endspaceless %}/>
+        <label for="star5" title="skvělý">5 stars</label>
+        <input type="radio" id="star4" name="rating" value="4"{% spaceless %}
+            {% if user.is_anonymous or rating %}disabled="disabled" {% endif %}
+            {% if rating %} class="blue"{% endif %}
+            {% if object.rank < 4 and object.rank > 3 %}checked="checked"{% endif %}
+            {% endspaceless %}/>
+        <label for="star4" title="velmi dobrý">4 stars</label>
+        <input type="radio" id="star3" name="rating" value="3"{% spaceless %}
+            {% if user.is_anonymous or rating %}disabled="disabled" {% endif %}
+            {% if rating %} class="blue"{% endif %}
+            {% if object.rank < 3 and object.rank > 2 %}checked="checked"{% endif %}
+            {% endspaceless %}/>
+        <label for="star3" title="ucházejcí">3 stars</label>
+        <input type="radio" id="star2" name="rating" value="2"{% spaceless %}
+            {% if user.is_anonymous or rating %}disabled="disabled" {% endif %}
+            {% if rating %} class="blue"{% endif %}
+            {% if object.rank < 2 and object.rank > 1 %}checked="checked"{% endif %}
+            {% endspaceless %}/>
+        <label for="star2" title="špatný">2 stars</label>
+        <input type="radio" id="star1" name="rating" value="1"{% spaceless %}
+            {% if user.is_anonymous or rating %}disabled="disabled" {% endif %}
+            {% if rating %} class="blue"{% endif %}
+            {% if object.rank < 1 and object.rank > 0 %}checked="checked"{% endif %}
+            {% endspaceless %}/>
+        <label for="star1" title="nekupovat">1 star</label>
+    </fieldset>
+    <input type="hidden" id="rating-id" value="{{object.pk}}" />
+    <input type="hidden" id="rating-ct" value="{{ct.pk}}" />
+    {% csrf_token %}
+</form>

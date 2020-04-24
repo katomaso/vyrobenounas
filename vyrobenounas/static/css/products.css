@@ -1,0 +1,165 @@
+#pageWrap {
+	margin: 0 auto;
+    overflow: hidden;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.sectionWrap {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+#content .sectionWrap {
+	max-width: 100%;
+}
+
+
+/** grid system **/
+.col-wrap {
+	overflow: hidden;
+    display: table;
+    width: 100%;
+}
+.cols {
+    display: block;
+    float: left;
+}
+.col-3 {
+	width: 33.334%;
+}
+#gridWrap {
+	background-color: #fff;
+    padding: 1.5em;
+}
+.grid-sizer, .grid-item {
+	width: 16.667%;
+}
+.grid-item--width2 {
+	width: 33.334%;
+}
+.gridWrap {
+    display: block;
+    position: relative;
+    background-color: white;
+    border: 1px solid #e2e2e2;
+    /*border-radius: 10px;*/
+    margin: 0.5em;
+    overflow: hidden;
+    z-index: 1;
+	top: 0;
+    text-decoration: none;
+}
+.grid-item[type=info] .gridWrap {
+    position: relative;
+    background-color: white;
+    border: 1px solid #b8cde0;
+    /*border-radius: 10px;*/
+    margin: 0.5em;
+    overflow: hidden;
+    z-index: 1;
+	top: 0;
+}
+.main .gridWrap:not(#productsMenuWrap):hover {
+    top: -10px;
+    box-shadow: 0px 6px 7px 0px rgba(0, 0, 0, 0.29);
+    /*cursor: pointer;*/
+   /* box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.18);*/
+}
+.gridImgWrap {
+    margin: 0.2em;
+    border: 1px solid #e8e8e8;
+    /*border-top-left-radius: 10px;
+    border-top-right-radius: 10px;*/
+    overflow: hidden;
+}
+.gridImg {
+    width: 100%;
+    display: block;
+}
+.productTextWrap {
+    border-top: 1px solid #f3f3f3;
+    margin: 0.2em 0 0 0;
+    padding: 0.5em 1em;
+    color: #797979;
+}
+.productTitle {
+    font-size: 1em;
+    font-weight: bold;
+}
+.productPrice {
+    color: #4c9be3;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding-bottom: 0.4em;
+    border-bottom: 1px solid #f1f1f1;
+}
+.manufacturer, .from {
+    font-size: 0.9em;
+    text-align: right;
+}
+.manufacturer {
+    font-weight: normal;
+    padding-top: 0.4em;
+}
+.from {
+    color: #c5c5c5;
+}
+.gridTextWrap {
+}
+.gridText {
+    padding: 0.5em 1em;
+    line-height: 1.3em;
+    color: #797979;
+    text-align: left;
+    background-color: rgba(76, 155, 227, 0);
+}
+.gridHeader {
+    position: relative;
+    padding: 0.3em 1em;
+    font-size: 1.1em;
+    background-color: #5dadf7;
+    color: #ffffff;
+    border-bottom: 1px solid #e6e6e6;
+}
+.gridTitle {
+}
+.infoTitle {
+    margin: 0;
+}
+.productTitle {
+    /*background-color: rgb(235, 127, 78);*/
+}
+.newTitle {
+   /* background-color: #90EE67;*/
+    /*color: #25650a;*/
+}
+.grid-item .gridWrap:before {
+    position: absolute;
+    top: 1em;
+    right: -3em;
+    padding: 0.5em 4em;
+    transform: rotate(45deg);
+    color: white;
+	box-shadow: 2px 1px 2px rgba(0, 0, 0, 0.32);
+}
+.grid-item[filter=info] .gridWrap:before {
+    /*content: "Zpráva";*/
+    background: #e5bc7a;
+    border: 1px solid #347ec1;
+}
+.grid-item[filter=new] .gridWrap:before {
+    content: "Novinka";
+    background: #3EE97D;
+}
+.grid-item[filter=vendor] .gridWrap:before {
+    content: "Zpráva";
+    background: #4da1c1;
+}
+.grid-item[type="info"] .gridHeader:after {
+    position: absolute;
+    font-family: FontAwesome;
+    content: "\f05a";
+    right: 0.25em;
+    top: 0.1em;
+    color: #ffffff;
+    font-size: 1.5em;
+}

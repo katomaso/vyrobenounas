@@ -1,0 +1,3 @@
+Pro potvrzení emailu prosím pokračujte na {{ activate_url }}
+
+Vyrobeno u Nás

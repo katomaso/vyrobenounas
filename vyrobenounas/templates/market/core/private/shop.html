@@ -1,0 +1,96 @@
+{% extends "core/private/home.html" %}
+{% load i18n fields %}
+
+{% block head-title%}Správa Vašeho obchodu{%endblock%}
+
+{% block media %}
+    {{ shop_form.media }}
+    {{ position_form.media }}
+    <script type="text/javascript">Loader.load();</script>
+{% endblock %}
+
+
+{% block bottom-javascript %}
+    {{block.super}}
+    <script type="text/javascript" src="{{STATIC_URL}}js/core.admin.shop.js"></script>
+{% endblock bottom-javascript %}
+
+
+{% block content %}
+<div class="content-unit">
+    <form method="post" enctype="multipart/form-data" id="shop-form" class="form-horizontal">
+    {%if has_shop %}<h1>Upravit obchod</h1>
+    {% else %}<h1> Založit obchod </h1>{% endif %}
+    {% csrf_token %}
+    {% if user_form %}
+        <fieldset>
+            <legend>Váš nový účet</legend>
+            {% hfield user_form.name %}
+            {% hfield user_form.email %}
+            {% hfield user_form.password1 %}
+            {% hfield user_form.password2 %}
+        </fieldset>
+    {% endif %}
+
+    <fieldset>
+        <legend>Neoficiální údaje o Vašem obchodu</legend>
+    {% hfield shop_form.name %}
+    {% hfield shop_form.motto placeholder="Jednou větou: čím je váš obchod zajímavý" %}
+
+    {% hfield shop_form.category %}
+    {% hfield shop_form.description show_info=False %}
+    {% hfield shop_form.logo %}
+    </fieldset>
+
+    <fieldset class="relative">
+        <legend>Provozovatel</legend>
+
+        {% hfield address_form.name %}
+        {% hfield address_form.street %}
+        {% hfield address_form.city %}
+        {% hfield address_form.zip_code size="6" %}
+        {% hfield address_form.business_id %}
+        {% hfield address_form.tax_id placeholder="Vyplní pouze PLÁTCI DPH"%}
+
+        {% hfield shop_form.bank_account placeholder="predcisli-cislo/banka" %}
+        {% hfield shop_form.shipping_options %}
+    </fieldset>
+
+    <fieldset>
+        <legend class="smaller">Mám obchod/výdejnu &nbsp;{{position_form.address_visible}}</legend>
+        <div id="position_fields">
+        {% hfield position_form.street %}
+        {% hfield position_form.city %}
+        {% hfield position_form.country %}
+        {{ position_form.position }}
+        {{ position_form.position_x }}
+        {{ position_form.position_y }}
+        {% hfield shop_form.openings %}
+        </div>
+    </fieldset>
+
+    {% if has_shop %}
+    <input class="btn btn-success btn-submit" type="submit" value="Uložit změny">
+    {# <a href="{% url 'admin-shop-delete'%}" class="btn btn-link">Smazat</a> #}
+    {% else %}
+    <input class="btn btn-success btn-submit" type="submit" name="create" value="Založit obchod">
+    {% endif %}
+    </form>
+</div>
+
+<div id="mapModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="mapModalLabel">(Volitelné) Upřesněte adresu posunutím značky</h3>
+      </div>
+      <div class="modal-body">
+        <div id="map" style="width:100%;height:300px;"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success btn-submit" data-dismiss="modal">Hotovo</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

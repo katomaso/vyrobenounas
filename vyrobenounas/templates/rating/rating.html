@@ -1,0 +1,47 @@
+        <span class="label label-info">Známka</span>
+
+        <div class="smaller-half left">
+            <span class="rank {{object.word_rank}}">{{ object.rank|stringformat:".2f" }}</span><br>
+            {{ object.votes }} hlasů
+        </div>
+        {% if rating %}
+        <div class="smaller-half right">
+            <div class="{{rating.word_rank}}" style="font-size:30px;margin-top:8px;">
+                {{ rating.rank|stringformat:".2f" }}
+            </div>
+            vaše známka
+        </div>
+        {% else %}
+        <div class="smaller-half right">
+            {% if user.is_authenticated %}
+                <a onclick="$('#rating{{object.pk}}').popover('toggle');return false;" class='btn btn-link'>
+                    Oznámkujte <br> i vy
+                </a>
+                <script type="text/javascript">
+                    function product_rank(rank) {
+                        $("#rating{{object.pk}}").popover("hide").popover("destroy");
+                        $("#rating{{object.id}}").load(
+                            "{% url 'rating' %}", 
+                            { rank: rank, slug: "{{object.slug}}", "ct": {{ct.pk}} }
+                        );
+                    }
+
+                    $(document).ready(function() {
+                        $("#rating{{object.pk}}").popover({
+                            html: true,
+                            content: '<a href="javascript:product_rank(1)" class="mark mark-one">1</a><a href="javascript:product_rank(2)" class="mark mark-two">2</a><a href="javascript:product_rank(3)" class="mark mark-three">3</a><a href="javascript:product_rank(4)" class="mark mark-four">4</a><a href="javascript:product_rank(5)" class="mark mark-five">5</a>',
+                            placement: "top",
+                            trigger: "manual"
+                        });
+                    });
+                </script>
+            {% else %}
+                <small>
+                    Pro hodnocení<br>
+                    <a href="{% url 'account_login' %}?next={{object.get_url_path}}">se přihlašte</a>
+                </small>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <br>

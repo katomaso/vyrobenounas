@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load core_tags cache %}
+
+
+{% block header %}{% endblock %}
+
+{% block nav-category-list %}
+      {% cache 86400 "manufacturer-list" manufacturers_count %}
+        <h3 class="h3-collapse" data-toggle="collapse" data-target="#category-list" >
+          <a class="btn glyphicon glyphicon-chevron-right" id="category-list-toggle"></a>Kategorie
+        </h3>
+        {% search_form term %}
+        {% manufacturers_categories %}
+      {% endcache %}
+{% endblock %}
+
+
+{% block content %}
+  {% if object_list %}
+
+    {% include "core/include/box-list.html" with box="core/include/manufacturer-box-small.html" %}
+
+  {% else %} {# object_list #}
+    <div class="content-unit">
+      <h2>Bohužel zatím nemáme žádné evidované české výrobce</h2>
+      <p>
+        Víte o nějakém českém výrobci? <a href="mailto:ahoj@vyrobenounas.cz">Napište nám o něm!</a>
+        Registrace a vedení záznamu je a bude vždy zdarma. Můžete mu tím jen pomoci.
+      </p>
+    </div>
+  {% endif %}
+{% endblock %}
+
+
+{% comment %}
+
+{% block bottom-javascript %}
+    {{ block.super }}
+    <script type="text/javascript" src="https://api4.mapy.cz/loader.js"></script>
+    <script type="text/javascript">Loader.load();</script>
+{% endblock bottom-javascript %}
+{% endcomment %}

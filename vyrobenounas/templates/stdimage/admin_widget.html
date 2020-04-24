@@ -1,0 +1,21 @@
+{# name, value, input, show_delete_button, MEDIA_URL #}
+{% load i18n core_tags %}
+{% if value %}
+    <table style="border-style: none;">
+        <tr>
+            <td colspan="2"><img src="{{ value.thumbnail.url|as_media }}" /></td>
+        </tr>
+        <tr>
+            <td style="vertical-align: middle;">{% trans "Change:" %}</td>
+            <td>{{input}}</td>
+        </tr>
+        {% if show_delete_button %}
+        <tr>
+            <td style="vertical-align: middle;">{% trans "Delete" %}</td>
+            <td><input type="checkbox" name="{{name}}_delete"/></td>
+        </tr>
+        {% endif %}
+    </table>
+{% else %}
+    {{ input }}
+{% endif %}

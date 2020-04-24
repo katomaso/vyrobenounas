@@ -1,0 +1,94 @@
+{% extends "checkout/base.html" %}
+{% load core_tags %}
+
+{% block upper-javascript %}
+    {{block.super}}
+    <script type="text/javascript" src="{{STATIC_URL}}js/checkout.payment.js"></script>
+{% endblock upper-javascript %}
+
+{% block head-title%}{{block.super}} - shrnutí{%endblock%}
+
+{% block checkout-address %}
+  <div class="row">
+    <div class="col-md-6 col-xs-12">
+      <h4>Fakturační adresa</h4>
+      {{ order.billing_address_text|linebreaks }}
+    </div>
+    <div class="col-md-6 col-xs-12">
+      <h4>Dodací adresa</h4>
+      {{ order.shipping_address_text|linebreaks }}
+    </div>
+  </div>
+  <br><br>
+{% endblock checkout-address %}
+
+{% block checkout-shipping %}
+    <table class="table table-condensed table-borderless">
+        <thead>
+          <tr>
+            <th>Obchod</th>
+            <th>Způsob dopravy</th>
+            <th width="20%">Cena dopravy</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for suborder in suborders %}
+            <tr>
+              <td>{{suborder.shop.name}}</td>
+              <td>{{suborder.shipping.name}}</td>
+              <td>{{suborder.shipping_costs|as_price}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <br><br>
+{% endblock checkout-shipping %}
+
+{% block checkout-payment %}
+
+{% for suborder in order.suborders.all %}
+    <table class="table table-condensed table-bordless table-bighead">
+        <thead>
+          <tr>
+            <th><large>{{ suborder.shop.name }}</large></th>
+            <th width="20%">{{ suborder.order_total|as_price }}</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for item in suborder.items.all %}
+            <tr>
+                <td>({{item.quantity}}x) {{item.product_name}}</td>
+                <td>{{item.line_total|as_price}}</td>
+            </tr>
+            {% endfor %}
+            {% for extra_price in suborder.extraorderpricefield_set.all %}
+            <tr>
+                <td>{{extra_price.label}}</td>
+                <td>{{extra_price.value|as_price}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if not forloop.last %}<br>{% endif %}
+{% endfor %}
+<br>
+<div class="row">
+    <div class="col-xs-12">
+        {% csrf_token %}
+        <h3 style="text-align: right">Cena: {{ order.order_total|as_price }} s DPH</h3>
+    </div>
+</div>
+
+<br>
+
+<form method="post" class="row">
+  {% hfield form.payment %}
+  <div class="col-xs-12 col-md-9">
+      <input type="submit" name="submit" value="Potvrdit objednávku" class="btn btn-success btn-submit"/>
+  </div>
+  <div class="col-xs-12 col-md-2 col-md-offset-1">
+    <input type="submit" name="abort" value="Zrušit" class="btn btn-link"/>
+  </div>
+</form>
+<br>
+{% endblock checkout-payment %}

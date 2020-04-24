@@ -1,0 +1,101 @@
+{% load core_tags comments fields ratings_tags %}
+
+<div class="product-box row">
+    {% if object.photo %}
+    <div class="col-xs-12 col-sm-5">
+        <a {%comment%}href="{% url 'ajax' %}{% get_params_only action='product_gallery' slug=object.slug %}" data-target="#modal{{object.pk}}" data-toggle="modal"{%endcomment%} style="">
+          <img class="product-photo" src="{{ object.photo.thumbnail|as_media }}" alt="fotka {{ object.get_name }}"/>
+        </a>
+    </div>
+
+    <div class="col-sm-7">
+        {# {% show_stars object %} #}
+        <br>
+        {% spaceless %}
+        <h1>
+            {% if no_forms_please %}<a href="{% url 'product' slug=object.slug %}">{% endif %}
+            {{object.get_name}}
+            {% if no_forms_please %}</a>{% endif %}
+            {% if object.manufacturer %}
+            <br>
+            <small>
+                z dílny <a href="{% url 'manufacturer' slug=manufacturer.slug %}">{{object.manufacturer.name}}</a>
+            </small>
+            {% endif %}
+            <br>
+            <small class="price">od {{ object.price|as_price }} s DPH</small>
+        </h1>
+        {% endspaceless %}
+        {{ object.description|linebreaks }}
+    </div>
+
+    {% else %}
+    <div class="col-sm-12">
+        {% comment %}
+            {% if not no_forms_please %}
+            <form id="rating-container" action="/rating" method="POST">
+            {% rating request.user object %}
+            </form>
+            {% endif %}
+        {% endcomment %}
+        <br>
+        <h1>
+            {{object.get_name}}
+            {% if object.manufacturer %}
+            <br>
+            <small>
+                od <a href="{% url 'manufacturer' slug=manufacturer.slug %}">{{object.manufacturer.name}}</a>
+            </small>
+            {% endif %}
+        </h1>
+        <br>
+        {{ object.description|linebreaks }}
+        <div class="price">{{ object.price|as_price }} s DPH</div>
+    </div>
+    {% endif %}
+</div>
+
+{% if not no_forms_please %}
+<div class="row">
+    <h2 class="margined">Nabídky</h2>
+    {% for offer in object.offers %}
+    <div class="col-xs-12 col-sm-6 col-xl-4">
+    <div class="price-box"
+         onclick="toggle_price('cart-form{{forloop.counter}}'); return false;">
+        {# <div class="rating">{% cached_bootstrap_starrating offer.shop 5 2 %}</div> #}
+        <h3>{{offer.shop.name}}</h3>
+        {% if offer.shop.position %}
+        <p class="address">{{offer.shop.position.street}}, {{offer.shop.position.city}}</p>
+        {%endif%}
+
+        <div style="height: 25pt">
+            <div id="cart-form{{forloop.counter}}"
+                 style="display:none"
+                 class="hide-on-success">
+            {% add_to_cart_form offer button_text="Koupit" %}
+            </div>
+        <p class="price">{{offer.price|as_price}}</p>
+        </div>
+    </div>
+    </div>
+    {% endfor %}
+    </ul>
+</div>
+
+<div class="row">
+    <h2 class="margined">Komentáře</h2>
+    <div class="comments row no-margin" id="comments">
+        {% render_comment_list for object %}
+    </div>
+    <br>
+</div>
+{% endif %}
+
+<!-- Modal -->
+<div id="modal{{object.pk}}" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="modalLabel{{object.pk}}">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="modalLabel{{object.pk}}">{{object.name}}</h3>
+  </div>
+  <div class="modal-body"></div>
+</div>

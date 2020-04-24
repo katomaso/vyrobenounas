@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block head-title%}Vyhledávání {{term|escape}}{%endblock%}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+    {% if object_list %}
+        {% comment %}
+        <div class="content-unit">
+            {% include "core/include/show-map.html" %}
+        </div>
+        {% endcomment %}
+
+        {% include "core/include/box-list.html" with box="core/include/product-box-small.html" %}
+
+    {% else %}
+        <div class="content-unit">
+            <h2>Nemáme nic jako "{{term}}"</h2>
+        </div>
+    {% endif %}
+
+{% endblock %}
+

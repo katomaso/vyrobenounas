@@ -1,0 +1,14 @@
+{% load get_params from core_tags %}
+
+
+    <ul class="nav nav-list affix-top category collapse in" id="category-list">
+
+    {% comment %} {# maybe one day ... #}
+    <form class="no-margin pull-center" onsubmit="return false;">
+        <input type="text" id="category-search" style="width:85%" placeholder="vyber kategorie">
+    </form>
+    {% endcomment %}
+
+    {% include "core/include/category-list-recursive.html" %}
+
+    </ul>

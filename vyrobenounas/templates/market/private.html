@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block head-title%}Správa{%endblock%}
+
+{% block header-block %}{% endblock %}
+
+
+{% block menu-navmenu %}
+    <div class="multishop-navmenu">
+      <div class="btn-group">
+        <a href="/" class="btn btn-nav">Domů</a>
+      </div>
+    </div>
+{% endblock menu-navmenu %}
+
+
+{% block nav-block %}
+<div class="col-lg-2 col-sm-3 col-xs-12 no-left-padding">
+  <div class="row">
+    <div class="col-sm-12 col-xs-12 multishop-sidebar-admin">
+      <h3 align="center"> Akce </h3>
+      {% block nav-admin-menu %}
+      <ul class="profile">
+        <li class="header">Profil</li>
+        <li class="{% if view == 'admin' %}active{% endif %}">
+          <a href="{% url 'user-manage'%}">Můj profil</a>
+          <ul class="nav nav-list">
+            <li class="{% if view == 'profileedit' %}active{% endif %}">
+              <a href="{% url 'user-edit'%}">Upravit profil</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="{% url 'account_logout'%}">Odhlásit</a>
+        </li>
+      </ul>
+      <ul class="shop">
+      {% if has_shop %}
+        <li class="header">Obchod</li>
+        <li class="{% if view == 'home' %} active{% endif %}">
+          <a href="{% url 'admin-home'%}">Můj obchod</a>
+          <ul class="nav nav-list">
+            <li class="{% if view == 'shop' %}active{% endif %}">
+            <a href="{% url 'admin-shop'%}">Upravit obchod</a>
+            </li>
+          </ul>
+        </li>
+        </li>
+        <li class="{% if view == 'products' %}active{% endif %}">
+          <a href="{% url 'admin-products' %}">Nabízené zboží</a>
+          <ul class="nav nav-list">
+            <li class="{% if view == 'addproduct' %}active{% endif %}">
+              <a href="{% url 'admin-product-add'%}">Přidat výrobek</a>
+            </li>
+          </ul>
+        </li>
+        <li class="{% if view == 'orderlist' %}active{% endif %}">
+          <a href="{% url 'order-list'%}">Prodeje</a>
+        </li>
+        <li class="{% if view == 'tariffadmin' %}active{% endif %}">
+          <a href="{% url 'tariff-manage'%}">Vyúčtování služeb</a>
+        </li>
+        {% else %}
+        <li class="{% if view == 'shop' %}active{% endif %}">
+          <a href="{% url 'admin-shop'%}">Založit obchod</a>
+        </li>
+        {% endif %}
+      </ul>
+      {% endblock nav-admin-menu %}
+    </div>
+  </div>
+</div>
+{% endblock nav-block %}
+
+
+{% block main-block %}
+    <div class="col-lg-10 col-sm-9 col-xs-12 content relative" id="content">
+      {% block content %}{% endblock %}
+    </div><!--/content-->
+{% endblock main-block %}

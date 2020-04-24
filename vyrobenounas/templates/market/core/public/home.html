@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n core_tags %}
+
+{% block content %}
+	{% include "core/include/filters.html" %}
+
+	<div id="gridWrap" class="main">
+		<div class="grid">
+			<div class="grid-sizer"></div>					
+			<div class="grid-item gridMenu">
+				<div class="gridWrap" id="productsMenuWrap">
+					<div id="productsMenuIn">
+						<div id="slideMenuHeader">										
+							<h1 id="menuHeader">Zboží</h1>
+						</div>
+						<div class="main-carousel">
+							<div class="carousel-cell menuCell" menu-title="Zboží">
+								<ul class="productsMenu">
+									<li class="menuItem parent" menuLink="textil">Textil<i class="nextMenu fa fa-caret-right" aria-hidden="true"></i></li>
+									<li class="menuItem parent" menuLink="obuv">Obuv<i class="nextMenu fa fa-caret-right" aria-hidden="true"></i></li>
+									<li class="menuItem parent" menuLink="potraviny">Potraviny<i class="nextMenu fa fa-caret-right" aria-hidden="true"></i></li>
+									<li class="menuItem" menuLink="keramika">Keramika</li>
+									<li class="menuItem parent" menuLink="nabytek">Nábytek<i class="nextMenu fa fa-caret-right" aria-hidden="true"></i></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% if object_list %}
+		        {% for object in object_list %}
+		            {% if forloop.counter %}
+						{% include "core/include/product-box-small.html" %}
+		            {% endif %}
+		        {% endfor %}
+			{% else %}
+				kde nic tu nic :)
+			{% endif %}
+		</div>
+	</div>
+	
+{% endblock %}

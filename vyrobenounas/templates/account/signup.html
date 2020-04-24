@@ -1,0 +1,34 @@
+{% extends "neutral.html" %}
+{% load fields socialaccount %}
+
+{% block backlinks %}
+    <li> <a href="{{ request.get_full_url }}">Registrace</a> </li>
+{% endblock backlinks %}
+
+{% block content %}
+    <h1>Registrovat <small>nebo rovnou <a href="{% url "admin-shop" %}">založit obchod</a></small></h1>
+    <h3><small>Registrovat se sociálně</small></h3>
+    <a href="{% provider_login_url 'facebook' method='oauth2' %}" class="btn">
+        <img src="{{STATIC_URL}}images/facebook-button.png">
+    </a>
+    <a href="{% provider_login_url 'google' %}" class="btn">
+        <img src="{{STATIC_URL}}images/google-button.png">
+    </a>
+
+    <br/>
+
+    <h3><small>Registrovat se přes email</small></h3>
+    <form action="" method="POST" class="form-horizontal">
+        {% csrf_token %}
+        {% hfield form.name label_size=3 col_size=5 %}
+        {% hfield form.email label_size=3 col_size=5 %}
+        {% hfield form.password1 label_size=3 col_size=5 %}
+        {% hfield form.password2 label_size=3 col_size=5 %}
+        {{ form.confirmation_key }}
+        <br>
+        <input type="submit" value="Registrovat" class="btn btn-success btn-submit"/>
+    </form>
+</div>
+{% endblock %}
+
+

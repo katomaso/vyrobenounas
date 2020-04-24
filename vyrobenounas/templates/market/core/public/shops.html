@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load core_tags cache %}
+
+
+{% block header %}{% endblock %}
+
+
+{% block head-title%}Vyrobenounas.cz - seznam obchodů{%endblock%}
+
+
+{% block nav-category-list %}
+      {% cache 86400 "shop-list" shops_count %}
+        <h3 class="h3-collapse" data-toggle="collapse" data-target="#category-list" >
+          <a class="btn glyphicon glyphicon-chevron-right" id="category-list-toggle"></a>Kategorie
+        </h3>
+        {% search_form term %}
+        {% shops_categories %}
+      {% endcache %}
+{% endblock %}
+
+
+{% block content %}
+  {% if object_list %}
+    {% comment %}
+    <div class="content-unit">
+      <h2>{% if category %}Prodejci v kategorii {{category.name}}{% else %}Mapa prodejců českého zboží{% endif %}</h2>
+      {% include "core/include/show-map.html" %}
+    </div>
+    {% endcomment %}
+
+    {% include "core/include/box-list.html" with box="core/include/shop-box-small.html" %}
+
+  {% else %} {# object_list #}
+    <div class="content-unit">
+      <h2>Nejsou prodejci tohoto zaměření</h2>
+      <p>
+        Víte o českém výrobci nebo prodejci který by mohl nabídnout své produkty
+        v této kategorii? <strong>Neváhejte a pozvěte ho.</strong>
+      </p>
+    </div>
+  {% endif %}
+{% endblock %}
+
+
+
+{% block bottom-javascript %}
+    {{ block.super }}
+    <script type="text/javascript" src="https://api4.mapy.cz/loader.js"></script>
+    <script type="text/javascript">Loader.load();</script>
+{% endblock bottom-javascript %}

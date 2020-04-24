@@ -1,0 +1,23 @@
+{% load get_params from core_tags %}
+
+{% for root in roots %}
+    {% if root.count > 0 or not hide_empty %}
+    <li id="category{{root.pk}}">
+        {% if root.subcategories %}
+        <a class="btn glyphicon glyphicon-chevron-right collapse-right" data-toggle="collapse" data-target="#subcategory{{root.pk}}"></a>
+        {% else %}
+        <a class="btn glyphicon inactive">&nbsp;</a>
+        {% endif %}
+        <a class="name" href="{{url_base}}/{{root.path}}/{% get_params %}">
+            {{ root.name }} ({{ root.count }})
+        </a>
+        {% if root.subcategories %}
+        <ul class="nav nav-list subcategory collapse level{{root.level}}" id="subcategory{{root.pk}}">
+        {% with root.subcategories as roots %}
+            {% include "core/include/category-list-recursive.html" %}
+        {% endwith %}
+        </ul>
+        {% endif %}
+    </li>
+    {% endif %}
+{% endfor %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load core_tags cache %}
+
+
+{% block header-block %}{% endblock %}
+
+
+{% block head-title %}{{block.super}} - {{ object.name }}{% endblock head-title %}
+
+
+{% block upper-javascript %}
+    {{block.super}}
+    <script type="text/javascript" src="{{STATIC_URL}}js/core.product.js"></script>
+{% endblock upper-javascript %}
+
+
+{% block nav-category-list %}
+    <h3 class="h3-collapse" data-toggle="collapse" data-target="#category-list" >
+      <a class="btn glyphicon glyphicon-chevron-right" id="category-list-toggle"></a>
+      {{ shop.name }}
+    </h3>
+    {% search_form term shop=shop %}
+
+    {% add_product_count %}
+    {% cache 86400 "shop-products" shop.slug shop.offer_set.count %}
+      {% shop_offers_categories shop %}
+    {% endcache %}
+{% endblock nav-category-list %}
+
+
+{% block content %}
+<div class="row content-unit expanded">
+    <div class="decorator-bar">
+      <a href="javascript:void(0)" id="shop-detail-toggle" class="btn glyphicon glyphicon-fullscreen" data-toggle="tooltip" title="Detail firmy"></a>
+    </div>
+
+    {% if shop.logo %}
+    <div class="col-xs-3"><img src="shop.logo|as_media"/></div>
+    {% endif %}
+
+    <div class="col-xs-{% if shop.logo %}9{%else%}12{%endif%}">
+        <h1>{{ shop.name }}{% if shop.position %} - {{ shop.position.city }} {% endif %}</h1>
+        <h3>{{ shop.motto }}</h3>
+    </div>
+
+    <div class="row" id="shop_detail"></div>
+</div>
+
+{% if not object_list %}
+    <div class="row">
+        <div class="boxes col-xs-12 col-sm-4">
+            <div class="box-small">
+                <h4>Žádné zboží v obchodě</h4>
+            </div>
+        </div>
+    </div>
+{% else %}
+    {% include "core/include/box-list.html" with box="core/include/offer-box-small.html" %}
+{% endif %}
+
+{% endblock %}

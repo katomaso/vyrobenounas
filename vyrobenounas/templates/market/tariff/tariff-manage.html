@@ -1,0 +1,74 @@
+{% extends "private.html" %}
+{% load core_tags fields %}
+
+{% block head-title%}Nastavení služeb{%endblock%}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12 col-md-6 no-left-padding">
+            <div class="content-unit">
+                <h1>Tarify</h2>
+                <strong>Aktuální tarif</strong>
+                <p>
+                    {{ billing.tariff.name }}
+                </p>
+                <strong>Aktuální vyúčtovací období</strong>
+                <p>
+                    {{ billing.get_period_display }}
+                </p>
+                <form method="post" class="form">
+                    {% field form.next_period %}
+                    <p>
+                    {% if billing.last_billed == today %}
+                    Případná změna účtovacího období se projeví právě dnes.
+                    {% else %}
+                    Změna účtovacího období se projeví až při nejbližším vyúčtování, což je za {{billing.next_billing|timeuntil}}.
+                    {% endif %}
+                    </p><br>
+                    <input type="submit" name="tariff" class="btn btn-success btn-submit" value="Změnit vyúčtovací období"/>
+                    {% csrf_token %}
+                </form>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-6 no-right-padding">
+            {% if campaign_active %}
+            <div class="content-unit">
+                <h2>Máte slevový kupon?</h2>
+                <form method="post" class="form">
+                    {% csrf_token %}
+                    {% hfield campaign_form.code %}
+                    <input type="submit" name="campaign" value="Použít kód" class="btn btn-success btn-submit">
+                </form>
+            </div>
+            {% endif %}
+
+            {% if discounts %}
+            <div class="content-unit">
+                <h2>Máte u nás slevy!</h2>
+                <ul class="nolist">
+                {% for discount in discounts %}
+                    <li><strong>{{discount.name}}</strong><br>
+                        <span class="subline">{{discount}}</span>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <div class="content-unit">
+                <h2>Vyúčtování</h2>
+                {% for bill in bills %}
+                    {% if bill.proforma.paid %}
+                        <a href="{% url 'invoice' uid=bill.invoice.uid %}"> {{ bill.invoice }} </a>
+                    {% else %}
+                        <a href="{% url 'invoice' uid=bill.proforma.uid %}"> {{ bill.proforma }} </a>
+                    {% endif %}
+                {% empty %}
+                    Nemáte zatím žádné doklady.
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}

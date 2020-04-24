@@ -1,0 +1,10 @@
+    <div class="sidebar-nav multishop-sidebar-nav">
+        <h3 class="pull-center">Administrace</h3>
+        <ul class="nav nav-list admin-menu">
+            {% for entry in entries %}
+            <li class="{% if view == entry.viewname %}selected{% endif %}">
+                <a href="{{ entry.path }}">{{ entry.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div id="gridWrap" class="main">
+		<div class="grid">
+			<div class="grid-sizer"></div>					
+			<div class="grid-item gridMenu">
+				<div class="gridWrap" id="productsMenuWrap">
+					<div id="productsMenuIn">
+						<div id="slideMenuHeader">										
+							<h1 id="menuHeader">Zboží</h1>
+						</div>
+						<div class="main-carousel">
+							<div class="carousel-cell menuCell" menu-title="Zboží">
+								<ul class="productsMenu">
+									<li class="menuItem parent" menuLink="textil">Textil<i class="nextMenu fa fa-caret-right" aria-hidden="true"></i></li>
+									<li class="menuItem parent" menuLink="obuv">Obuv<i class="nextMenu fa fa-caret-right" aria-hidden="true"></i></li>
+									<li class="menuItem parent" menuLink="potraviny">Potraviny<i class="nextMenu fa fa-caret-right" aria-hidden="true"></i></li>
+									<li class="menuItem" menuLink="keramika">Keramika</li>
+									<li class="menuItem parent" menuLink="nabytek">Nábytek<i class="nextMenu fa fa-caret-right" aria-hidden="true"></i></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="grid-item" type="products" filter="products">
+				<div class="gridWrap" gridId="1">
+					<div class="gridImgWrap">
+						<img class="gridImg">
+						<div class="manufacturerImg"></div>
+					</div>
+					<div class="productTextWrap">
+						<div class="productTitle gridTitle">Pletená čepice</div>
+						<div class="productPrice">500 Kč</div>
+						<div class="manufacturer">Eliška Holá</div>
+						<div class="from">Dobřejovice</div>
+					</div>
+				</div>
+			</div>
+			<div class="grid-item" type="info" filter="info">
+				<div class="gridWrap" gridId="1">
+					<div class="gridTextWrap">
+						<div class="gridHeader">Zpráva blablabla</div>
+						<div class="gridText">
+							Vítr skoro nefouká a tak by se na první pohled mohlo zdát, že se balónky snad vůbec nepohybují. Jenom tak klidně levitují ve vzduchu. Jelikož slunce jasně září a na obloze byste od východu k západu hledali mráček marně...							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="grid-item" type="products" filter="bio">
+				<div class="gridWrap" gridId="10">
+					<div class="gridImgWrap">
+						<img class="gridImg">
+					</div>
+					<div class="productTextWrap">
+						<div class="productTitle gridTitle">Domácí sušenky</div>
+						<div class="productPrice">150 Kč</div>
+						<div class="manufacturer">Tereza Héčová</div>
+						<div class="from">Žitenice</div>
+					</div>
+				</div>
+			</div>
+			<div class="grid-item" type="products" filter="new">
+				<div class="gridWrap" gridId="2">
+					<div class="gridImgWrap">
+						<img class="gridImg">
+					</div>
+					<div class="productTextWrap">
+						<div class="productTitle gridTitle">RAW tyčinky</div>
+						<div class="productPrice">40 Kč</div>
+						<div class="manufacturer">Patrik Manda</div>
+						<div class="from">Praha - Žižkov</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

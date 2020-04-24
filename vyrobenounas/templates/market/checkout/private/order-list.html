@@ -1,0 +1,72 @@
+{% extends "core/private/home.html" %}
+{% load core_tags %}
+
+{% block head-title%}Přehled objednávek{%endblock%}
+
+
+{% block upper-javascript %}
+    {{ block.super }}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/ajax-csrf.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/checkout.order.js"></script>
+{% endblock upper-javascript %}
+
+{% block content %}
+<div class="content-unit">
+    <div class="decorator-bar">
+    <div class="btn-group">
+        <a href="?status=shipped" class="btn btn-link{% if status == 'shipped' %} active{% endif %}">
+            Doručené ({{ shipped_count }})
+        </a>
+        <a href="?status=completed" class="btn btn-link{% if status == 'completed' %} active{% endif %}">
+            Zaplacené ({{ completed_count }})
+        </a>
+        <a href="?status=confirmed" class="btn btn-link{% if status == 'confirmed' %} active{% endif %}">
+            Potvrzené ({{ confirmed_count }})
+        </a>
+    </div>
+    </div>
+
+    <h1>Objednávky</h1>
+
+    {% if object_list %}
+        <table class="table table-bordless table-hover">
+            <thead>
+                <tr>
+                    <th>Poslední změna</th>
+                    <th>Cena</th>
+                    <th>Dokumenty</th>
+                    <th>Akce</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for object in object_list %}
+                <tr>
+                    <td><a href="{% url 'order-detail' slug=object.uid %}">{{object.modified}}</a></td>
+                    <td><a href="{% url 'order-detail' slug=object.uid %}">{{object.amount_paid|as_price}} / {{object.order_total|as_price}}</a></td>
+                    <td>
+                        {% if object.proforma %}<a href="{% url 'order-download' slug=object.uid document='proforma'%}">proforma</a>{% endif %}
+                        {% if object.invoice %}<a href="{% url 'order-download' slug=object.uid document='invoice'%}">faktura</a>{% endif %}
+                    </td>
+                    <td id="order-actions-{{ object.uid }}">
+                        {% if object.is_confirmed %}
+                            <button class="btn btn-primary btn-mini order-paid"
+                                    onclick="order_send_paid(this, '{% url "order-paid" %}',  '{{ object.uid }}')">
+                              <i class="icon-ok  icon-white"></i>
+                            </button>
+                        {% endif %}
+                        {% if object.is_confirmed or object.is_completed %}
+                            <button class="btn btn-primary btn-mini order-shipped"
+                                    onclick="order_send_shipped(this, '{% url "order-shipped" %}', '{{ object.uid }}')">
+                              <i class="icon-plane  icon-white"></i>
+                            </button>
+                        {% endif %}
+                      </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        Nemáte zde žádné objednávky.
+    {% endif %}
+</div>
+{% endblock content%}

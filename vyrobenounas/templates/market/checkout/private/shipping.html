@@ -1,0 +1,75 @@
+{% extends "checkout/base.html" %}
+{% load core_tags fields %}
+
+{% block head-title%}{{block.super}} - doprava{%endblock%}
+
+
+{% block checkout-decorator %}
+  <a href="{% url 'checkout-cancel' %}" class="btn btn-decorator">
+    <i class="icon-remove icon-white"></i></a>
+{% endblock checkout-decorator %}
+
+
+{% block checkout-address %}
+  <div class="row">
+    <div class="col-md-6 col-xs-12">
+      <h4>Fakturační adresa</h4>
+      {{ order.billing_address_text|linebreaks }}
+    </div>
+    <div class="col-md-6 col-xs-12">
+      <h4>Dodací adresa</h4>
+      {{ order.shipping_address_text|linebreaks }}
+    </div>
+  </div>
+  <br><br>
+{% endblock checkout-address %}
+
+
+{% block checkout-shipping %}
+  <form method="post">
+    {% csrf_token %}
+    <table class="table table-borderless">
+      <tbody>
+    {% for form in formset %}
+      {% with suborder = form.instance %}
+      <tr class="form-group{% if form.errors %} error{%endif%}">
+          <td class="col-xs-6 col-md-4 required">
+            <label>{{suborder.shop.name}}</label>
+            <ul>
+            {% for item in suborder.items.all %}
+              <li>{{item.product_name}} ({{item.quantity}} ks)</li>
+            {% endfor %}
+            </ul>
+          </td>
+          <td class="col-xs-6 col-md-4">
+            {% if suborder.shop.ships %}
+            <label for="{{ form.shipping.label_id }}">Chci dopravit zboží za {{ form.instance.get_potential_shipping }}</label> {{ form.shipping }}
+            {% else %}
+            Obchodník neposkytuje přepravu zboží.
+            {% endif %}
+          </td>
+          <td class="col-xs-12 col-md-4">
+            {% ifield form.message %}
+          </td>
+      </tr>
+      {% endwith %}
+    {% endfor %}
+      </tbody>
+    </table>
+    <br>
+    <div class="row">
+      <div class="col-xs-10">
+        <button type="submit" class="btn btn-success btn-submit" name="send">
+          Přejít na shrnutí a platbu
+        </button>
+      </div>
+      <div class="col-xs-2">
+        <button type="submit" class="btn btn-danger btn-submit" name="abort">
+          Zrušit
+        </button>
+      </div>
+    </div>
+  </form>
+  <br>
+
+{% endblock checkout-shipping %}

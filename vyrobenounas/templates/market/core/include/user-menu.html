@@ -1,0 +1,42 @@
+{% load core_tags fields socialaccount %}
+
+      {% if request.user.is_authenticated %}
+        {% add_menu_items "public" %}
+        {% for item in menu_items %}
+          <li><a href="{{item.path}}">{{ item.title|safe }}</a></li>
+          <li class="divider"></li>
+        {% endfor %}
+        <li>
+          <a href="{% url 'account_logout' %}?next=/">Odhlásit se</a>
+        </li>
+
+
+      {% else %}
+        <li>
+          <a href="{% provider_login_url 'facebook' method='oauth2' %}">
+            Facebook
+          </a>
+          <a href="{% provider_login_url 'google' %}">
+            Google
+          </a>
+        </li>
+
+        <li>
+          <form role="form" class="form-horizontal login-form" method="post" action="{% url "account_login" %}">
+          {% csrf_token %}
+          {% add_login_form %}
+          {% hfield login_form.login placeholder="email" col_size=11 show_label=False %}
+          {% hfield login_form.password placeholder="heslo" col_size=11 show_label=False%}
+            <fieldset class="form-group">
+              <div class="col-sm-6 small-lr-padding">
+                <input type="hidden" name="next" value="{{ request.get_full_path }}"/>
+                <input type="submit" class="btn btn-info btn-submit" value="Přihlásit">
+              </div>
+              <div class="col-sm-6 small-lr-padding">
+                <a href="{% url "account_signup" %}?next={{request.get_full_path}}">Registrovat</a>
+              </div>
+            </fieldset>
+          </form>
+        </li>
+
+      {% endif %}

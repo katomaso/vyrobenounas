@@ -1,0 +1,7 @@
+  <div class="btn-group">
+    {% for item in menu_items %}
+      <a href="{{ item.path }}" class="btn">
+          {{ item.title }}
+      </a>
+    {% endfor %}
+  </div>

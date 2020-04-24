@@ -1,0 +1,166 @@
+{% load i18n core_tags fields compress %}
+<!DOCTYPE html>
+<html lang="{% lang %}">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>{% block head-title %}Vyrobeno u nás.cz{% endblock %}</title>
+  <meta name="description" content="" />
+  <meta name="author" content="Tomáš Peterka" />
+  <meta name="viewport" content="width=device-width; initial-scale=1.0" />
+  <meta property="og:image" content="http://vyrobenounas.cz{{ STATIC_URL }}apple-touch-icon-precomposed.png" />
+  <meta property="og:site_name" content="Vyrobeno u Nás" />
+  <meta property="og:url" content="http://vyrobenounas.cz/" />
+  <meta property="og:title" content="České obchody na jednom místě."/>
+  <meta property="og:type" content="eshop"/>
+  {% block head-meta %}
+  {% endblock%}
+
+  <link rel="stylesheet" href="{{STATIC_URL}}bootstrap4/css/bootstrap.min.css" />
+  <script src="{{STATIC_URL}}jquery/jquery.js"></script>
+
+  {% compress css %}
+  {% block stylesheet %}
+  <link rel="stylesheet" href="{{STATIC_URL}}css/teaser.css" />
+  {% endblock %}
+  {% endcompress %}
+
+  {% compress js %}
+  {% block upper-javascript %}
+  <script src="{{STATIC_URL}}js/multishop.js"></script>
+  <script src="{{STATIC_URL}}js/teaser.js"></script>
+  {% endblock %}
+  {% endcompress %}
+
+  {% block media %}{# place where to render {{ form.media }} #}{% endblock %}
+
+  {% block ie678 %}
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  {% endblock %}
+  <link rel="apple-touch-icon-precomposed" sizes="114x114 144x144" href="{{ STATIC_URL }}apple-touch-icon-precomposed.png" />
+  <link rel="apple-touch-icon" sizes="57x57 72x72" href="{{ STATIC_URL }}apple-touch-icon.png" />
+  <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.png" />
+  {% analytics %}
+  </head>
+
+  <body>
+  <div class="social-toolbox">
+    <a href="{% url 'teaser-home' %}" class="pull-left">
+      <img src="{{ STATIC_URL }}images/logo.png">
+    </a>
+    <a href="https://twitter.com/vyrobenounas" target="_blank" class="pull-right">
+      <img src="{{ STATIC_URL }}images/twitter-dark.png">
+    </a>
+  </div>
+
+  <div class="content-unit center{%block main_class%}{% endblock%}">
+    {% block content %}
+    <h1>VŠECHNY ČESKÉ VÝROBKY</h1>
+    <h2>pod jednou střechou</h2>
+    <h2 class="sub">pro Vás</h2>
+
+    {% if teaser_phase %}
+    <a href="#to-chci" class="btn btn-success btn-want">To chci</a>
+    {% else %}
+    <a href="/zakaznik/" class="btn btn-success btn-want">Do obchodu</a>
+    {% endif %}
+
+    <div class="row table">
+        <a href="#zakaznici" class="col-xs-12 col-md-6">#pro zákazníky</a>
+        <a href="#pomahame-podnikatelum" class="col-xs-12 col-md-6">#pro podnikatele</a>
+    </div>
+    <div class="row blueb">
+      <h3>Kdo jsme</h3>
+      <div class="lead col-xs-12 col-md-6 offset-md-3">
+        Místo kde jednou seženete jakýkoli český výrobek. Před nákupem můžete porovnat nabídky
+        různých obchodů a poté si třeba dojít výrobek osobně vyzkoušet.
+      </div>
+    </div>
+    <div class="row blueb">
+      <h3 id="zakaznici">Proč nakupovat zboží právě tady</h3>
+      <div class="lead col-xs-12 col-md-6 offset-md-3">
+        Vyrobenounás.cz cílí především na drobné podnikatele a proto zde najdete opravdu lokální
+        a unikátní zboží.<br/><br/>
+        Při hledání velkovýrobního zboží můžete porovnat cenové nabídky v okolí a tak si nejvhodněji
+        vybrat.<br><br/>
+        Navíc poskytujeme přehlednou mapu obchodů, takže vždy víte, jaké prodejce máte za rohem.<br><br/>
+        Také díky nám máte přehled o všem, co v Čechách vyrábíme.
+      </div>
+    </div>
+    <div class="row blueb">
+      <h3 id="pomahame-podnikatelum">Pomáháme začínajícím podnikatelům</h3>
+      <div class="lead col-xs-12 col-md-6 offset-md-3">
+        Založení i zrušení obchodu je zdarma a otázkou vteřin. Pro
+        malé podnikatele je provoz obchodu úplně zdarma! V případě růstu vašeho obchodu máme solidní
+        <a href="{% url 'tariff-list' %}">ceny za služby</a>.<br><br>
+        Získáte moderní virtuální obchod s vysokou návštěvností, skvělou administraci, mobilním
+        přístupem a technickou podporou.<br><br>
+        Zdarma Vás umístíme na mapu, aby Vás zákazníci lehce našli. Navíc nelze zvýhodňovat pozice,
+        takže Vás nepřeválcuje větší prodejce.
+      </div>
+    </div>
+    <div class="row blueb">
+      <h3 id="zachranit-svet">Zachraňujte svět s námi</h3>
+      <div class="lead col-xs-12 col-md-6 offset-md-3">
+      Lokální obchod je základním kamenem pro zlepšení situace v naší zemi. Pokud budeme držet více
+      peněz ve vnitřním oběhu, pak více lidí bude moci dělat práci kterou mají rádi.
+      Můžeme se všichni mít lépe, důležité je spolupracovat na tom.<br><br>
+      Kvalitní české výrobky vydrží déle než jejich levnější konkurence a podporujete tak Čechy,
+      kteří dělají, co je naplňuje. Navíc zabraňujete výrobě v chudých zemích, kde s lidmi často
+      špatně nakládají.<br><br> </div>
+    </div>
+    <div class="row blueb">
+      <h3 id="to-chci">Také se Vám líbí nápad?</h3>
+      <div class="lead col-xs-12 col-md-6 offset-md-3">
+        Zůstaňte s námi v kontaktu a buďte první u spuštění!
+        <form method="post" class="teaser-form" action="#to-chci">
+          {% csrf_token %}
+          <div class="input-group{% if form.email.errors %} errro has-error has-feedback{% endif %}">
+            {% ifield form.email placeholder="Váš email" class="form-control"%}
+            <span class="input-group-btn">
+              <button type="submit" class="btn btn-success">Jsem s vámi!</button>
+            </span>
+          </div>
+          {% block messages %}
+            {% if messages %}
+            <ul class="alert">
+            {% for message in messages %}
+              <li class="{% if message.tags %}alert-{{ message.tags }}{% endif %}"> {{ message }}
+            {% endfor %}
+            </ul>
+            </div>
+            {% endif %}
+          {% endblock %}
+        </form>
+      </div>
+    </div>
+
+    <div class="hline"></div>
+    <div class="social-footer">
+      <a href="https://twitter.com/intent/tweet?button_hashtag=vyrobenounas" class="twitter-hashtag-button" data-size="large" data-related="vyrobenounas" data-url="http://vyrobenounas.cz">Tweet #vyrobenounas</a>
+      <script>
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+      </script>
+
+      <div id="fb-root"></div>
+      <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=102903073208172";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));</script>
+
+      <div class="fb-like" data-href="http://vyrobenounas.cz/" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-font="arial" data-colorscheme="dark"></div>
+    </div>
+    {% endblock %}
+  </div>
+
+  {% block bottom-javascript %}
+  <script src="{{ STATIC_URL }}bootstrap4/js/bootstrap.min.js"></script>
+  {% endblock %}
+  </body>
+</html>

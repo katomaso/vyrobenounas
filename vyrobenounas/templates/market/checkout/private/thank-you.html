@@ -1,0 +1,53 @@
+{% extends "checkout/base.html" %}
+
+{% block head-title%}{{block.super}} - objednávka {% if order.is_unconfirmed %}čeká na potvrzení{% else %}potvrzena{% endif%}{%endblock%}
+
+{% block backlinks %}
+    <li> <a href="{{ request.get_full_url }}">Objednávka {% if order.is_unconfirmed %}čeká na potvrzení{% else %}potvrzena{% endif%}</a> </li>
+{% endblock backlinks %}
+
+{% block content %}
+
+  {% if order.is_unconfirmed %}
+  <h1>Potvrďte Vaši objednávku!</h1>
+  <p class="lead centered">
+  Ještě je potřeba potvrdit Váš email abychom Vám mohli dát vědět až bude objednávka vyřízena.
+  Zaslali jsme Vám email s odkazem pro potvrzení emailu "{{ user.email }}".
+  Pokud jste email zadali špatně, tak máte jedinečnou možnost
+  <a href="{% url 'account_email' %}">jej opravit</a>.
+  <br>
+  </p>
+
+  {% if password_form %}
+    <h2>Pssst! Můžete si nastavit heslo.</h2>
+    <p class="lead">
+      Zaheslujte si váš účet "{{ user.email }}". Získáte tak trvalý přístup ke
+      <a href="{% url 'order-list' %}" title="">správě objednávek</a>.
+      <br>
+      Heslo může být jakékoliv (třeba i jeden znak).
+
+      <form action="{% url 'account_set_password'%}" method="post" accept-charset="utf-8">
+      {% csrf_token %}
+      {% hfield password_form.password1 %}
+      {% hfield password_form.password2 %}
+      <br>
+      <input type="hidden" name="next" value="{% url 'user-manage' %}"/>
+      <input type="submit" name="submit" value="Nastavit heslo" class="btn btn-link">
+      </form>
+    </p>
+  {% endif %}
+  {% endif %}
+
+  {% if order.is_confirmed or order.is_paid %}
+  <h1>Děkujeme za potvrzení vaší objednávky</h1>
+  <p class="lead">
+    Objednávku jsme předali do obchodu. <br>
+    Toto okno můžete zavřít nebo přejít na
+    <a href="{% reverse 'home' %}" class="btn btn-link">hlavní stránku</a> nebo
+    <a href="{% reverse 'order-list' %}" class="btn btn-link">správu objednávek</a>
+  </p>
+  {% endif %}
+
+  <br>
+
+{% endblock %}

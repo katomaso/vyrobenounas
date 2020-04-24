@@ -1,0 +1,71 @@
+{% extends "private.html" %}
+{% load i18n core_tags %}
+
+{% block head-title%}Správa účtu{%endblock%}
+
+{% block nav-usermenu-inner %}
+        <li class="{% if view == "admin-home" %}active{% endif %}">
+            <a href="{% url 'user-manage'%}">Profil</a>
+        </li>
+        <li class="{% if view == "profileedit" %}active{% endif %}">
+            <a href="{% url 'user-edit'%}">Upravit profil</a>
+        </li>
+{% endblock %}
+
+
+{% block content %}
+<div class="row">
+  <div class="col-xs-12 content-unit no-bottom-padding">
+    <div class="decorator-bar">
+      <a href="{% url 'account_email' %}" class="btn glyphicon glyphicon-envelope" data-toggle="tooltip" title="Správa emailů"></a>
+      <a href="{% url 'user-edit' %}" class="btn glyphicon glyphicon-edit" data-toggle="tooltip" title="Upravit profil"></a>
+    </div>
+    <h1 class="pull-left">{{user.name}} <small>{{user.email}}</small></h1>
+    {% if user.avatar %}
+    <img src="{{user.avatar.thumbnail.url|as_media}}" class="pull-left shadowed"/>
+    {% endif %}
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 no-left-padding no-right-padding">
+    <div class="content-unit relative small-bottom-padding">
+      <h4>Vaše objednávky</h4>
+      {% if orders %}
+      <table class="table table-bordless table-hover">
+        <thead>
+          <tr>
+            <th>Datum</th><th>Obchod</th><th>Stav</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+            {% for suborder in order.suborders.all %}
+              <tr>
+                <td>
+                  <a href="{{suborder.get_url_path}}">
+                    {{suborder.modified}}
+                  </a>
+                </td>
+                <td>
+                  <a href="{{suborder.get_url_path}}">
+                    {{suborder.shop.name}}
+                  </a>
+                </td>
+                <td>
+                  <a href="{{suborder.get_url_path}}">
+                    {% trans suborder.get_status_display %}
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+        <p>Ještě jste nenakupoval</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% load comments fields %}
+
+<div class="card card-block">
+    {% if user.is_authenticated %}
+    <h4 class="card-title">{{ user.name }}</h4>
+    <small>{% now "j. F Y f" %}</small>
+    <p class="card-text">
+    {% get_comment_form for object as comment_form %}
+    <form action="{% comment_form_target %}" method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+        {% ifield comment_form.comment rows=5 placeholder="Váš názor" show_label=False  widget_class="width100" label_size=0 %}
+        {{ comment_form.honeypot }}
+        {{ comment_form.content_type }}
+        {{ comment_form.object_pk }}
+        {{ comment_form.timestamp }}
+        {{ comment_form.security_hash }}
+        </fieldset>
+        <input type="hidden" name="next" value="{% url 'product' slug=object.slug format='html' %}" />
+        <input type="submit" value="Vyjádřit se" id="id_submit" class="btn btn-submit btn-info"/>
+    </form>
+    {% else %}
+    <p class="card-text">
+        <a href="{% url 'account_login' %}?next={% url 'product' slug=object.slug format='html' %}">Přihlásit se</a> do diskuze.
+    </p>
+    {% endif %}
+    </p>
+</div>

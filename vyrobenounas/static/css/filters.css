@@ -1,0 +1,124 @@
+/** filtr **/
+#filterWrap {
+    background-color: #e6e6e6;
+    border-top: 1px solid #d2d2d2;
+    border-bottom: 1px solid #d2d2d2;
+    position: relative;
+    overflow: hidden;
+}
+#filter {
+    padding: 0.5em 0;
+    color: #FFF;
+    display: table;
+    width: 100%;
+}
+#filterWrap.fixed-center  {
+    background-color: rgba(0, 0, 0, 0.7);
+	border: 0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.34);
+}
+#filterWrap.fixed-center label {
+    color: white;
+}
+.fixed-center #searchWrap .inputWrap {
+	border: 0;
+}
+
+.radioFilter {
+	display: table-cell;
+}
+
+#searchWrap .inputWrap {
+    display: table;
+    margin: 0 auto;
+    position: relative;
+    width: 80%;
+    overflow: hidden;
+    border: 1px solid #c3c3c3;
+	padding: 0;
+}
+#serachWrap .filterColIn {
+    width: auto;
+    margin: 0 auto;
+}
+#searchInput {
+	padding: 0.5em 1em;
+    padding-right: 2em;
+    border: 0;
+    width: 100%;
+}
+#searchInput:focus {
+	outline: 0;
+	border-color: #c1c1c1;
+}
+#searchButton {
+    padding: 0.8em;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    right: 0em;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    cursor: pointer;
+    background-color: #5dadf7;
+    color: white;
+}
+
+.filterCol {
+    display: table-cell;
+    text-align: center;
+    color: #4e4e4e;
+    width: 20%;
+}
+.filterColIn {
+    display: table;
+    width: 100%;
+}
+.filterCol label {
+    padding: 0 0.5em;
+	transition: all 200ms ease;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+}
+.labelFilter {
+    cursor: pointer;
+}
+.labelFilter:before {
+    content: "x";
+    color: rgba(255, 255, 255, 0);
+    background-color: #ffffff;
+    border: 5px solid #ffffff;
+    /* outline: 1px solid #6d6d6d; */
+    display: inline-block;
+    width: 0.5em;
+    height: 0.5em;
+    margin-right: 0.4em;
+    transition: all 200ms ease;
+    -webkit-transition: all 200ms ease;
+    -moz-transition: all 200ms ease;
+    -o-transition: all 200ms ease;
+    line-height: 0.5em;
+    /*border-radius: 10px;*/
+    /* box-shadow: 0 0 0.4px 0 black; */
+}
+.labelFilter:hover:before {
+    color: rgba(255, 255, 255, 0);
+    background-color: #efefef;
+}
+.checkBox:checked + .labelFilter:before {
+    color: rgba(255, 255, 255, 0);
+    background-color: #e5bc7a;
+}
+.labelFilter:hover .labelFilter:before {
+    border: 1px solid #505050;
+}
+.labelFilter.newFilter:before {
+}
+.labelFilter.infoFilter:before {
+}
+.checkBox {
+    display: none;
+}

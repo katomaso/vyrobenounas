@@ -1,0 +1,157 @@
+/** flipper **/
+#flipper .wrap {
+	position: relative;
+	width: 90px;
+	height: 90px;
+	margin: 0 auto;
+	
+	/*-webkit-perspective: 800;
+	-moz-perspective: 800;
+	-o-moz-perspective: 800;
+	perspective: 800;
+	perspective-origin: -200% 50%;
+	-webkit-perspective-origin: -200% 50%;
+	-moz-perspective-origin: -200% 50%;
+	-o-perspective-origin: -200% 50%;*/
+}
+#flipper .pages {
+	display: table;
+	position: absolute;
+	width: 90px;
+	height: 45px;
+	transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	/*transition: all 200ms ease;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-o-transition: all 200ms ease;*/
+}
+
+#flipper .topHalf .pages {		
+	transform-origin: 0 45px;
+	-webkit-transform-origin: 0 45px;
+	-moz-transform-origin: 0 45px;
+	-o-transform-origin: 0 45px;
+}
+#flipper .bottomHalf .pages {		
+	transform-origin: 0 0px;
+	-webkit-transform-origin: 0 0px;
+	-moz-transform-origin: 0 0px;
+	-o-transform-origin: 0 0px;
+}
+
+#flipper .topPage {		
+	z-index: 2;
+}
+#flipper .bottomPage {		
+	z-index: 1;
+}
+#flipper .pageWrap, .pageWrapIn {
+	width: 90px;
+	height: 45px;
+}
+#flipper .content {
+	display: table;
+	color: #FFF;
+	text-align: center;
+	position: absolute;
+	height: 45px;
+	width: 90px;
+	/*transition: all 300ms ease;*/
+}
+#flipper .text {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	color: #666666;
+    font-size: 1.2em;
+	cursor: pointer;
+}
+.topHalf .text, .bottomHalf .text {
+    border: 1px solid rgba(102, 102, 102, 0.15);
+}
+.topHalf .text {
+    border-bottom: rgba(51, 51, 51, 0);
+}
+.bottomHalf .text {
+    border-top: rgba(51, 51, 51, 0);
+}
+#flipper .under .text {
+	color: #fff;
+	font-size: 1em;
+}
+
+#flipper .pageFront {
+	z-index: 2;
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	-o-backface-visibility: hidden;
+}
+
+#flipper .half {
+	position: absolute;
+	height: 45px;
+	width: 90px;
+}
+
+.topHalf, .topHalf .pages, .topHalf .pageWrap, .topHalf .pageWrapIn, .topHalf .pageFront, .topHalf .under, .topHalf .shadow, .topHalf .pageFront .text, .topHalf .under .text {
+	border-top-left-radius: 45px;
+	border-top-right-radius: 45px;
+}
+
+.bottomHalf, .bottomHalf .pages, .bottomHalf .pageWrap, .bottomHalf .pageWrapIn, .bottomHalf .pageFront, .bottomHalf .under, .bottomHalf .shadow, .bottomHalf .pageFront .text, .bottomHalf .under .text {
+	border-bottom-left-radius: 45px;
+	border-bottom-right-radius: 45px;
+}
+
+#flipper .bottomHalf {
+	position: absolute;
+	top: 45px;
+}	
+#flipper .topPage .content {
+	background-color: #e6e6e6;
+}
+#flipper .bottomPage .content {
+	background-color: #e5bc7a;
+}
+
+#flipper .bottomHalf .pageFront {
+	border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+.under .text {
+	-webkit-touch-callout: none; 
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+#flipper .under {
+	transition: all 100ms ease;
+	-webkit-transition: all 100ms ease;
+	-moz-transition: all 100ms ease;
+	-o-transition: all 100ms ease;
+}
+#flipper .topHalf .under {
+	box-shadow: inset 0px -1px 1px 0px rgba(0, 0, 0, 0.22);
+}	
+#flipper .topHalf:active .under {
+	box-shadow: inset 0px -2px 1px 0px rgba(0, 0, 0, 0.22);
+}	
+#flipper .bottomHalf .under {
+	box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.22);
+}	
+#flipper .bottomHalf:active .under {
+	box-shadow: inset 0px 2px 1px 0px rgba(0, 0, 0, 0.22);
+}
+
+#flipper .under:active  {
+    background-color: #d4ae71;
+}
+#flipperWrap {
+    display: table;
+    margin: 0 auto;
+    border-radius: 100px;
+}

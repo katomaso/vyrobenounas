@@ -1,0 +1,16 @@
+{% load core_tags i18n %}
+
+<div class="box-small">
+    {% if object.product.photo %}
+    <a href="{% url 'admin-product' slug=object.product.slug %}" class="photo">
+        <img src="{{ object.product.photo.thumbnail|as_media }}" alt="fotka {{ object.get_name }}"/>
+    </a>
+    {% endif %}
+    <div class="description">
+        <h3><a href="{% url 'admin-product' slug=object.product.slug %}">{{ object.get_name }}</a></h3>
+        <p>{{ object.product.description|linebreaksbr|truncatechars:300 }}</p>
+        <p class="price">
+            Cena <strong>{{ object.price|as_price }} s DPH</strong>
+        </p>
+    </div>
+</div>

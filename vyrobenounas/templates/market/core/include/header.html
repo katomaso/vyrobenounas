@@ -1,0 +1,48 @@
+<header>
+	<div id="burger" class="t200"><i class="fa fa-bars" aria-hidden="true"></i></div>
+	{% include "core/include/popup.html" %}
+	<div id="search-small" class="t200 small"><i class="fa fa-search" aria-hidden="true"></i></div>
+	<div id="search-input-small-wrap" class="small">
+		<div id="search-input-small-wrap-in" class="small">
+			<input id="search-input-small" placeholder="Vyhledejte si...">
+		</div>
+	</div>
+	<div id="basket-small" class="t200 small"><a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i><div class="basketNumber">0</div></a></div>
+	<div id="topBorder"></div>
+	<section id="topMenu">
+		<div class="sectionWrap">
+			<div id="navigationMainWrap" class="menuWrap">
+				<ul id="navigationMain" class="menu">
+					<li id="homeButton"><a href="http://monty-it.cz/vyrobenounas/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+					<li><a href="#">O projektu</a></li>
+					<li><a href="#">Obchodní podmínky</a></li>
+					<li><a href="#">Kontakty</a></li>
+				</ul>
+			</div>
+			<div id="navigationUserWrap" class="menuWrap">
+				<ul id="navigationUser" class="menu">
+					<li id="basket"><a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i><div class="basketNumber">0</div></a></li>
+					<li><a href="#">Přihlásit se</a></li>
+					<li><a href="#">Registrovat</a></li>
+				</ul>
+			</div>
+		</div>			
+	</section>
+	<section id="header">
+		<div class="sectionWrap col-wrap">
+			<div id="logoWrap" class="cols col-3">
+				<img id="logo" src="{{STATIC_URL}}images/logo2.png" onclick="window.location.href = 'index.php'">
+			</div>
+			<div id="sections" class="cols col-3 menuWrap">
+				<ul class="menu">
+					<li class="sectionItem"><a href="#" class="active"><div class="sectionButton"><i class="sectionIcon icon-shopping-bag"></i><div class="sectionText">Zboží</div></div></a></li>
+					<li class="sectionItem"><a href="#"><div class="sectionButton"><i class="sectionIcon icon-home"></i><div class="sectionText">Obchody</div></div></a></li>
+					<li class="sectionItem"><a href="#"><div class="sectionButton"><i class="sectionIcon icon-user"></i><div class="sectionText">Výrobci</div></div></a></li>
+				</ul>
+			</div>	
+			<div id="flipper" class="cols col-3">
+				{% include "core/include/flipper.html" %}
+			</div>
+		</div>
+	</section>
+	</header>

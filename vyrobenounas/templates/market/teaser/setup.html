@@ -1,0 +1,19 @@
+{% extends "teaser/home.html" %}
+{% load fields %}
+
+{% block head-title%}Vyrobenounas.cz - úprava předregistrace{%endblock%}
+
+{% block content %}
+    <h1>Vaše registrace</h1>
+    <p class="lead">
+        Zde spravujete svoji registraci.
+        Pokud již nemáte zájem, řekněte nám prosím proč.
+    </p>
+    <form method="post" class="teaser-form">
+        {% csrf_token %}
+        {% field form.active %}
+        {% ifield form.message %}
+        <br><br>
+        <input type="submit" class="btn btn-success" value="Uložit"/>
+    </form>
+{% endblock %}
